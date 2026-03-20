@@ -13,10 +13,11 @@ const config: Config = {
         "linen-mist": "#EBEBE4",
         "dried-sage": "#56604B",
         "pure-white": "#FFFFFF",
+        "warm-gold": "#A89070",
       },
       fontFamily: {
         heading: ["var(--font-cormorant)", "Georgia", "serif"],
-        body: ["var(--font-inter)", "system-ui", "sans-serif"],
+        body: ["var(--font-montserrat)", "system-ui", "sans-serif"],
       },
       letterSpacing: {
         widest: "0.3em",

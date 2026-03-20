@@ -33,29 +33,48 @@ export default function FAQAccordion() {
   const [open, setOpen] = useState<number | null>(null);
 
   return (
-    <div className="space-y-0">
+    <div>
       {faqs.map(({ q, a }, i) => (
-        <div key={i} className="border-t border-obsidian-moss/15">
+        <div key={i} className="border-t border-obsidian-moss/10">
           <button
             onClick={() => setOpen(open === i ? null : i)}
-            className="w-full flex items-start justify-between gap-6 py-7 text-left group"
+            className="w-full flex items-start justify-between gap-8 py-7 text-left group cursor-pointer"
             aria-expanded={open === i}
           >
-            <span className="font-heading text-xl md:text-2xl text-obsidian-moss leading-snug group-hover:text-dried-sage transition-colors duration-200">
+            <span className="font-heading text-[1.25rem] md:text-[1.4375rem] text-obsidian-moss leading-snug group-hover:text-dried-sage transition-colors duration-300">
               {q}
             </span>
-            <span className="font-heading text-2xl text-dried-sage mt-0.5 flex-shrink-0 transition-transform duration-200">
-              {open === i ? "−" : "+"}
+            {/* Animated plus/minus */}
+            <span
+              className="relative flex-shrink-0 mt-1.5 w-5 h-5"
+              aria-hidden="true"
+            >
+              {/* Horizontal bar (always visible) */}
+              <span className="absolute top-1/2 left-0 w-full h-px bg-warm-gold -translate-y-1/2 opacity-60 group-hover:opacity-100 transition-opacity duration-200" />
+              {/* Vertical bar (rotates to 0 on open) */}
+              <span
+                className="absolute top-1/2 left-1/2 w-px h-full bg-warm-gold -translate-x-1/2 -translate-y-1/2 opacity-60 group-hover:opacity-100 transition-all duration-300"
+                style={{
+                  transform: `translate(-50%, -50%) scaleY(${open === i ? 0 : 1})`,
+                  opacity: open === i ? 0 : undefined,
+                }}
+              />
             </span>
           </button>
-          {open === i && (
-            <p className="font-body text-base text-obsidian-moss/75 leading-relaxed pb-8 max-w-2xl">
+          <div
+            className="overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)]"
+            style={{
+              maxHeight: open === i ? "480px" : "0px",
+              opacity: open === i ? 1 : 0,
+            }}
+          >
+            <p className="font-body text-[0.9375rem] text-obsidian-moss/65 leading-relaxed pb-8 max-w-2xl border-l-2 border-warm-gold/30 pl-6 ml-0">
               {a}
             </p>
-          )}
+          </div>
         </div>
       ))}
-      <div className="border-t border-obsidian-moss/15" />
+      <div className="border-t border-obsidian-moss/10" />
     </div>
   );
 }
