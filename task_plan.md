@@ -30,7 +30,7 @@ Full-stack landing page (sales/conversion page) + fully dynamic CMS backend for 
 - [x] Conversion flow: Landing → Application Form → Thank You → Email Sequence
 - [x] Behavioral rules & brand voice defined in `claude.md`
 - [x] Tech stack approved: Next.js 14 + Tailwind + Payload CMS + Supabase + Vercel
-- [ ] Existing copy uploaded by user (pending)
+- [x] Existing copy uploaded by user (complete — integrated into page.tsx 2026-03-20)
 - [ ] UI/UX design repo URL provided (pending)
 
 ---

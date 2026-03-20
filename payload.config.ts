@@ -5,12 +5,12 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
-import { Pages } from './src/collections/Pages'
-import { Offers } from './src/collections/Offers'
-import { Testimonials } from './src/collections/Testimonials'
-import { FAQs } from './src/collections/FAQs'
-import { Media } from './src/collections/Media'
-import { Users } from './src/collections/Users'
+import { Pages } from '@/collections/Pages'
+import { Offers } from '@/collections/Offers'
+import { Testimonials } from '@/collections/Testimonials'
+import { FAQs } from '@/collections/FAQs'
+import { Media } from '@/collections/Media'
+import { Users } from '@/collections/Users'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
