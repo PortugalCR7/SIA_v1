@@ -121,7 +121,7 @@
 | Vercel | Hosting + CI/CD (authenticated: `portugalcr7`) | 🔄 Linking | Vercel dashboard |
 | Supabase | Database (Postgres), Auth, Storage | 🔄 Linking | `.env` |
 | Email (TBD) | Application confirmation + nurture sequence | ❓ Pending | `.env` |
-| UI/UX Repo (TBD) | Design system + component library | ❓ URL pending | git submodule / package |
+| UI/UX Repo | Design system + component library | ✅ Confirmed | https://github.com/nextlevelbuilder/ui-ux-pro-max-skill.git |
 
 ---
 
@@ -145,3 +145,4 @@
 |------|--------|--------|
 | 2026-03-20 | Project Constitution initialized — skeleton | System Pilot |
 | 2026-03-20 | Phase 1 Discovery complete — stack decided, behavioral rules set | System Pilot |
+| 2026-03-20 | Phase 1 complete — UI/UX repo URL confirmed | System Pilot |

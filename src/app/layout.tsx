@@ -1,42 +1,39 @@
 import type { Metadata } from "next";
-import { Cormorant_Garamond, Montserrat } from "next/font/google";
+import { Cormorant_Garamond, Jost } from "next/font/google";
 import "./globals.css";
 
 const cormorant = Cormorant_Garamond({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: ["300", "400", "500", "600"],
   style: ["normal", "italic"],
   variable: "--font-cormorant",
   display: "swap",
 });
 
-const montserrat = Montserrat({
+const jost = Jost({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600"],
-  variable: "--font-montserrat",
+  weight: ["300", "400", "500"],
+  variable: "--font-jost",
   display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Soul Initiation Academy",
+  title: "Soul Initiation Academy — Cross the Threshold",
   description:
-    "There is a threshold between achieving and becoming. Soul Initiation Academy is where that crossing happens.",
+    "A six-month initiation for people at a real threshold in their life. Not seeking more insight, but a way to move through.",
   openGraph: {
     title: "Soul Initiation Academy",
-    description:
-      "You've done the work. But something in you knows you haven't crossed yet.",
+    description: "You've done the work. But something in you knows you haven't crossed yet.",
     type: "website",
   },
 };
 
 export default function RootLayout({
   children,
-}: Readonly<{
-  children: React.ReactNode;
-}>) {
+}: Readonly<{ children: React.ReactNode }>) {
   return (
     <html lang="en">
-      <body className={`${cormorant.variable} ${montserrat.variable}`}>
+      <body className={`${cormorant.variable} ${jost.variable}`}>
         {children}
       </body>
     </html>
