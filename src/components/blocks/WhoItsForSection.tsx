@@ -11,21 +11,20 @@ interface WhoItsForSectionProps {
   sectionLabel?: string;
   heading: string;
   items?: WhoItem[];
-  image?: any;
+  image?: unknown;
 }
 
 export default function WhoItsForSection({
   sectionLabel = "Who This Is For",
   heading,
   items = [],
-  image,
 }: WhoItsForSectionProps) {
   const listRef = useRef<HTMLDivElement>(null);
   const [dashActive, setDashActive] = useState<boolean[]>(items.map(() => false));
 
   useEffect(() => {
     setDashActive(items.map(() => false));
-  }, [items.length]);
+  }, [items]);
 
   useEffect(() => {
     const container = listRef.current;
@@ -49,7 +48,7 @@ export default function WhoItsForSection({
     );
     io.observe(container);
     return () => io.disconnect();
-  }, [items.length]);
+  }, [items]);
 
   return (
     <section className="split">

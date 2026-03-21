@@ -18,9 +18,9 @@ interface HeroSectionProps {
   statBar?: StatItem[];
   ctaLabel?: string;
   ctaUrl?: string;
-  backgroundImage?: any;
-  backgroundVideoMp4?: any;
-  backgroundVideoWebm?: any;
+  backgroundImage?: unknown;
+  backgroundVideoMp4?: unknown;
+  backgroundVideoWebm?: unknown;
 }
 
 function HeroHeadline({ headline, subheadline }: { headline: string; subheadline?: string }) {

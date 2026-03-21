@@ -24,7 +24,7 @@ interface SplitRightSectionProps {
   body?: string;
   notItems?: NotItem[];
   isItems?: IsItem[];
-  image?: any;
+  image?: unknown;
 }
 
 export default function SplitRightSection({
@@ -33,7 +33,6 @@ export default function SplitRightSection({
   body,
   notItems = [],
   isItems = [],
-  image,
 }: SplitRightSectionProps) {
   const imgContainerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLDivElement>(null);

@@ -1,5 +1,6 @@
 import { buildConfig } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
+import { resendAdapter } from '@payloadcms/email-resend'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { fileURLToPath } from 'url'
@@ -32,10 +33,15 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: postgresAdapter({
-    push: true,
+    push: process.env.NODE_ENV !== 'production',
     pool: {
       connectionString: process.env.DATABASE_URI || '',
     },
+  }),
+  email: resendAdapter({
+    defaultFromAddress: process.env.EMAIL_FROM || 'noreply@soulinitiation.com',
+    defaultFromName: 'Soul Initiation Academy',
+    apiKey: process.env.RESEND_API_KEY || '',
   }),
   sharp,
 })

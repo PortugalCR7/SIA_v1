@@ -1,3 +1,5 @@
+export const dynamic = 'force-dynamic'
+
 import { getPayload } from 'payload'
 import config from '@payload-config'
 
@@ -21,12 +23,17 @@ import OfferSection from '@/components/blocks/OfferSection'
 import FAQSection from '@/components/blocks/FAQSection'
 import FinalCTASection from '@/components/blocks/FinalCTASection'
 
+interface MarqueeItem {
+  text: string
+}
+
+/* eslint-disable @typescript-eslint/no-explicit-any -- CMS blocks are dynamic; props are spread directly from Payload */
 function renderBlock(block: any, siteConfig: any) {
   switch (block.blockType) {
     case 'hero':
       return <HeroSection key={block.id} {...block} />
     case 'marquee':
-      return <MarqueeSection key={block.id} row1={siteConfig.marqueeRow1?.map((r: any) => r.text) ?? []} row2={siteConfig.marqueeRow2?.map((r: any) => r.text) ?? []} />
+      return <MarqueeSection key={block.id} row1={siteConfig.marqueeRow1?.map((r: MarqueeItem) => r.text) ?? []} row2={siteConfig.marqueeRow2?.map((r: MarqueeItem) => r.text) ?? []} />
     case 'splitLeft':
       return <SplitLeftSection key={block.id} {...block} />
     case 'thresholdStatement':
@@ -55,6 +62,7 @@ function renderBlock(block: any, siteConfig: any) {
       return null
   }
 }
+/* eslint-enable @typescript-eslint/no-explicit-any */
 
 export default async function Home() {
   const payload = await getPayload({ config })
@@ -78,6 +86,7 @@ export default async function Home() {
           siteTitle={siteConfig.siteTitle}
           navLinks={siteConfig.navLinks}
         />
+        {/* eslint-disable-next-line @typescript-eslint/no-explicit-any -- CMS blocks are dynamic from Payload */}
         {page.blocks?.map((block: any) => renderBlock(block, siteConfig))}
         <Footer
           siteTitle={siteConfig.siteTitle}

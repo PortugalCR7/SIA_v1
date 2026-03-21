@@ -64,7 +64,7 @@ async function seed() {
   // Idempotency: skip if already seeded
   console.log('Seeding Testimonials...')
   const existingTestimonials = await payload.find({ collection: 'testimonials', limit: 1 })
-  let testimonialDocs: any[] = []
+  let testimonialDocs: { id: string | number }[] = []
   if (existingTestimonials.totalDocs > 0) {
     console.log('  Testimonials already seeded — loading existing IDs')
     const all = await payload.find({ collection: 'testimonials', limit: 10 })
@@ -83,7 +83,7 @@ async function seed() {
 
   console.log('Seeding FAQs...')
   const existingFAQs = await payload.find({ collection: 'faqs', limit: 1 })
-  let faqDocs: any[] = []
+  let faqDocs: { id: string | number }[] = []
   if (existingFAQs.totalDocs > 0) {
     console.log('  FAQs already seeded — loading existing IDs')
     const all = await payload.find({ collection: 'faqs', limit: 10 })
@@ -150,7 +150,7 @@ async function seed() {
 
   console.log('Seeding Guides...')
   const existingGuides = await payload.find({ collection: 'guides', limit: 1 })
-  let guideDocs: any[] = []
+  let guideDocs: { id: string | number }[] = []
   if (existingGuides.totalDocs > 0) {
     console.log('  Guides already seeded — loading existing IDs')
     const all = await payload.find({ collection: 'guides', limit: 10 })
@@ -341,8 +341,8 @@ async function seed() {
   // Update relationship fields with created doc IDs
   const homePage = await payload.find({ collection: 'pages', where: { slug: { equals: 'home' } } })
   if (homePage.docs[0]) {
-    const blocks = homePage.docs[0].blocks as any[]
-    const updatedBlocks = blocks.map((block: any) => {
+    const blocks = homePage.docs[0].blocks as Array<Record<string, unknown>>
+    const updatedBlocks = blocks.map((block: Record<string, unknown>) => {
       if (block.blockType === 'guides') {
         return { ...block, guides: guideDocs.map((d) => d.id) }
       }

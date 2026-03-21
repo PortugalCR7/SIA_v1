@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.80.0",
+    "@payloadcms/email-resend": "^3.80.0",
     "@payloadcms/next": "^3.80.0",
     "@payloadcms/richtext-lexical": "^3.80.0",
     "graphql": "^16.13.1",

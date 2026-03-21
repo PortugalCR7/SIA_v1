@@ -6,7 +6,7 @@ interface Guide {
   title: string;
   role: string;
   body: string;
-  image?: any;
+  image?: unknown;
 }
 
 interface GuidesSectionProps {
