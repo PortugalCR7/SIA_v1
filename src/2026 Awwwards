@@ -1,0 +1,133 @@
+SIA v1 — Awwwards-Level UI/UX Enhancement Audit
+2026 Standards · Health / Wellness / Rites of Passage Industry
+Awwwards judges on four axes: Design (40%), Creativity (20%), Usability (20%), Content (20%). Every suggestion below maps to one or more of those. I'll go section by section, then cover global systems.
+
+
+SIA v1 — Awwwards Enhancement Checklist
+Status as of March 20, 2026
+GLOBAL SYSTEMS
+✅ Lenis smooth scroll engine — LenisProvider wired into layout.tsx
+✅ Custom cursor with morphing states — CustomCursor in layout.tsx; full CSS with apply, view, nav, link states in globals.css
+✅ Page loading / intro screen — PageLoader component in page.tsx; 3-stage CSS animation (symbol in → rule draws → name tracks wide)
+✅ Global grain / noise overlay — body::after SVG fractalNoise at opacity: 0.04 fixed to viewport
+✅ Third monospace font (JetBrains Mono) — loaded in layout.tsx, --font-mono variable, applied to .overline globally
+✅ Typography weight upgrade — Cormorant loaded with 700 weight; headings at font-weight: 700
+✅ Overline letter-spacing increased — now 0.5em (was 0.3em)
+✅ Warm bone color palette — parchment: #E8E4DC, cream: #F0EBE3, gold: #B5A898, gold-lt: #C8BFB2
+✅ Warm duotone image treatment — .img-warm class: grayscale(1) sepia(0.28) brightness(0.9) contrast(1.05) applied to all images
+✅ Image grain overlay — .img-grain::after SVG noise at opacity: 0.07 with mix-blend-mode: overlay
+✅ Word-by-word hero text reveal — HeroHeadline component: "You've Done" slides from left, "the Work." from right, subline word-by-word with 40ms stagger
+✅ Image parallax system — SplitLeft and SplitRight both implement scroll-based translateY at 0.85x speed
+✅ ThresholdStatement scroll-pinned — 200vh wrapper + sticky top-0 h-screen, sequential reveal keyed to scroll progress
+✅ Horizontal scroll Process section — GSAP ScrollTrigger pin + scrub, connector line, arc node dots, phase ghost numerals; mobile fallback vertical layout
+☐ Variable font weight animation on hero headline — weight 300→700 on load (only opacity/translate currently animated; no variable font weight transition)
+HERO
+✅ Video background with image fallback — <video> element referencing /videos/hero-loop.mp4 + .webm, poster = hero image; .hero-video CSS at opacity: 0.45
+✅ Cinematic split headline animation — left/right slide + word stagger after loader exits (1900ms delay)
+✅ Scroll indicator — ScrollIndicator component with animated drawing line
+✅ "444" ghost watermark — clamp(8rem, 20vw, 20rem), opacity: 0.03, bottom-right of hero
+✅ Hero stat bar — HeroStatBar component: Cohort / Duration / Begins with hairline separators
+✅ Nav SVG monogram — NavMonogram threshold-arch SVG, desktop shows text + mark, mobile mark only
+✅ Nav CTA fills solid on scroll — scrolled state drives bg-parchment text-ink + nav-cta-filled box-shadow
+☐ Actual hero video asset — /videos/hero-loop.mp4 and /videos/hero-loop.webm files need to be provided/sourced
+MARQUEE TICKER
+✅ Speed slowed — Row 1: 50s (was 28s), Row 2: 75s
+✅ Monospace font — overline class now uses JetBrains Mono globally
+✅ Two-speed dual rows — Row 1 forward, Row 2 reverse at different speed and opacity
+✅ Separator symbol — &#x2726; (✦ four-pointed star, more ritual-coded than the original ◆)
+THRESHOLD STATEMENT
+✅ Section pinned for 200vh — scroll progress drives sequential reveal
+✅ "It's a" → "Threshold." cinematic sequence — "It's a" fades up first, "Threshold." slides from right at progress > 0.2
+✅ "Threshold." warm gold color + glow — #C8B89A color + text-shadow: 0 0 40px rgba(200,184,154,0.3) at progress > 0.35
+✅ Quote enlarged — text-[2.5rem] md:text-[3rem]
+✅ Radial gradient bumped — rgba(255,255,255,0.07) (was 0.03)
+✅ 2-col content grid reveal — fades up at progress > 0.5
+SPLIT LEFT ("Do You Recognize This?")
+✅ Image parallax — inset-[-15%] oversize + translateY scroll offset
+✅ 80ms staggered reveal per list item — individual IntersectionObserver with setTimeout(idx * 80)
+✅ Full hover choreography — gold line draws in (CSS height 0→2rem), content pads left, body text fades darker
+✅ Mobile bottom gradient overlay — bg-gradient-to-t from-[#F0EBE3] on mobile only
+✅ Warm cream background — bg-cream (#F0EBE3)
+PROCESS ("Arc of Initiation")
+✅ GSAP horizontal scroll + pin — ScrollTrigger.pin, scrub: 1, track translates on X axis
+✅ Phase ghost numerals fade in — gsap.fromTo opacity 0→0.07 on section enter
+✅ Phase names at larger editorial scale — clamp(3rem, 5vw, 5rem) per panel
+✅ Body copy at ink/70 — readable against cream background
+✅ Gold connector line animates with scroll — scaleX(0→1) scrubbed, gradient gold
+✅ Arc node dots activate gold — each dot transitions to var(--gold) as its phase scrolls into view
+✅ Mobile fallback — clean vertical stacked layout below 768px
+SPLIT RIGHT ("Soul Initiation Program")
+✅ "This is not / This is" GSAP timeline — × items stagger in → strikethroughs draw scaleX → — items reveal with x offset
+✅ Image parallax — matching SplitLeft treatment
+✅ Section headline enlarged — clamp(3rem, 6vw, 6rem) (was 2.5→4.5rem)
+✅ Warm parchment background — #F0EBE3 inline style
+WHAT THIS REQUIRES
+✅ Stat counter animations — StatCard with requestAnimationFrame cubic-ease count-up, prefers-reduced-motion respected
+✅ Data-grid border separators — getStatBorderClasses() applies responsive border-r / border-b per cell
+✅ Body note text at parchment/50 — upgraded from /30
+✅ Radial gradient at 0.06 — (was 0.03)
+WHO IT'S FOR
+✅ Headline line break + italic — "Not designed / for everyone." with <em className="italic font-bold">
+✅ Dash color transition staggered — each — animates from rgba(0,0,0,0.15) → var(--gold) with 140ms stagger on scroll entry
+✅ Different image from hero — now uses brand-reference.png (not the repeated mountain-vista.png)
+OUTCOMES ("What Tends to Change")
+✅ Full hover choreography — box-shadow lift 0_0_60px, rule draws, title translates, body fades from /60 to /80, body also translate-y-1 → translate-y-0
+✅ Headline enlarged — clamp(3rem, 7vw, 5.5rem) with max-w-5xl
+GUIDES ("Threshold Documents")
+✅ Section label renamed — "Supporting Materials" → "Threshold Documents"
+✅ Atmospheric gradient placeholders — unique per card: layered radial gradients + SVG grain overlay + ghost Roman numeral (fades out on hover)
+✅ Card hover choreography — scale-[1.02], image inner zooms scale-[1.05], gold accent line draws full width, border lightens
+☐ Real photography/imagery — placeholders still in place; actual images of listening practices, archetypal descent, ritual/ceremony materials need to be sourced and added
+TESTIMONIALS
+✅ .t-card class applied — translateY(-8px) + box-shadow hover now active (was defined in CSS but not applied in old code)
+✅ Staggered vertical cascade — offsets: ["", "md:mt-6", ""] — card 2 drops 24px
+✅ Full-bleed " decorative mark — absolute -top-6 -left-3, text-[9rem], text-ink/[0.07]
+✅ Specificity in attribution — "S.M. — Executive, Cohort 2024", "A.R. — Architect, Cape Town", "J.K. — Therapist, Cohort 2025"
+OFFER ("Investment & Application")
+✅ Investment copy updated — "Disclosed upon application. Payment plans available."
+✅ Vertical timeline spine — scaleY(0→1) draws down on scroll entry
+✅ CTA link corrected — href="#apply-form" (was mailto:)
+✅ Concentric SVG circles draw — stroke-dashoffset animation with 200ms stagger per ring (3 rings in Offer, 4 in Final CTA)
+☐ Embedded application form — #apply-form anchor exists but no actual form component (Tally / Typeform embed or native form) has been built yet
+FAQ
+✅ FAQAccordion component used — replaces the basic <details> version; animated cross indicator + max-height transition
+✅ Headline updated — "Understand the threshold" → "Questions at the Threshold"
+✅ Answers split into paragraphs — each FAQ answer is now an array of strings rendered as separate <p> elements
+✅ Left border accent kept — border-l-2 border-gold/25 pl-6
+FINAL CTA
+✅ "444" at watermark scale — clamp(4rem, 12vw, 10rem) at parchment/10
+✅ No repeated photo — replaced with pure ink radial gradient + SVG grain + warm glow
+✅ CTA copy upgraded — "Cross the Threshold — Apply for April 2026 →"
+✅ Section breathes more — py-60 md:py-80
+✅ 4-ring concentric SVG draws on scroll — stroke-dashoffset with 350ms stagger, centered full-bleed
+FOOTER
+✅ Decorative seal before footer — NavMonogram at opacity: 0.15 centered above footer border
+✅ Social links — Instagram + LinkedIn with inline SVG icons, aria-label set
+✅ Roman numeral branding — "444 · EST. MMXXIV"
+✅ "All rites reserved." — rites/rights wordplay in copyright line
+SUMMARY
+Category	Complete	Remaining
+Global Systems	14/15	1
+Hero	7/8	1
+Marquee	4/4	0
+Threshold Statement	6/6	0
+Split Left	5/5	0
+Process	7/7	0
+Split Right	4/4	0
+What This Requires	4/4	0
+Who It's For	3/3	0
+Outcomes	2/2	0
+Guides	3/4	1
+Testimonials	4/4	0
+Offer	4/5	1
+FAQ	4/4	0
+Final CTA	5/5	0
+Footer	4/4	0
+TOTAL	80/84	4
+The 4 remaining items:
+
+☐ Variable font weight animation on hero headline (300→700 on load)
+☐ Actual hero video asset files (hero-loop.mp4 / .webm)
+☐ Real photography for the Guides / Threshold Documents section
+☐ Embedded application form at #apply-form
+The first is a code task. The last three are content/asset tasks. What would you like to tackle next?

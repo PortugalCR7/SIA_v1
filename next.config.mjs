@@ -2,6 +2,7 @@ import { withPayload } from '@payloadcms/next/withPayload'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  transpilePackages: ['lenis'],
   images: {
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
