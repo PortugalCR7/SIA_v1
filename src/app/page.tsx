@@ -1289,7 +1289,50 @@ function FAQ() {
           style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)" }} stagger={70} baseDelay={80}>
           Questions at the Threshold
         </SplitHeading>
-        <FAQAccordion />
+        <FAQAccordion faqs={[
+          {
+            question: "How is this different from other coaching or transformation programs?",
+            answer: [
+              "Most programs work on the level of behavior, mindset, or strategy. Soul Initiation works at the level of identity and soul.",
+              "We are not here to optimize who you are — we are here to help you discover who you actually are beneath the roles, the achievements, and the constructed self.",
+            ],
+          },
+          {
+            question: "Is this a spiritual or religious program?",
+            answer: [
+              "Soul Initiation Academy is not affiliated with any religion. We draw on the archetypal wisdom present across many traditions — but the work is experiential, not doctrinal.",
+              "You bring your own cosmology. We simply create the depth of container for it to be lived.",
+            ],
+          },
+          {
+            question: "Do I need to have done therapy or previous inner work?",
+            answer: [
+              "This program is designed for people who have already done meaningful inner work — therapy, retreat, ceremony, mentorship. This is not an entry-level offering.",
+              "If you are new to personal development, we recommend beginning there first. This is for those who have already been walking the path.",
+            ],
+          },
+          {
+            question: "What is the time commitment?",
+            answer: [
+              "Weekly group sessions run 90 minutes. We recommend an additional 1–2 hours per week for reflection, journaling, and integration.",
+              "Depth requires space. The program runs for six months.",
+            ],
+          },
+          {
+            question: "What happens after I apply?",
+            answer: [
+              "We will reach out within 3 business days to schedule a conversation.",
+              "This call is not a sales call — it is a genuine exploration of whether this program and cohort are the right fit for you at this moment. Mutual discernment matters to us.",
+            ],
+          },
+          {
+            question: "Why only 8 initiates per cohort?",
+            answer: [
+              "The depth this work requires cannot happen in a large group. Eight people is deliberate.",
+              "It creates the intimacy, safety, and collective field necessary for genuine initiation. Every cohort becomes its own sacred container.",
+            ],
+          },
+        ]} />
       </div>
     </section>
   );
