@@ -67,22 +67,23 @@ export default function ThresholdStatementSection({
             {sectionLabel}
           </p>
 
-          <div className="mb-24 md:mb-32">
-            <h2 className="font-heading text-parchment leading-[0.9] text-balance font-bold" style={{ fontSize: "clamp(4.5rem, 11vw, 11rem)" }}>
+          <div className="mb-20 md:mb-28">
+            <h2 className="font-heading text-parchment leading-[0.88] text-balance font-bold" style={{ fontSize: "clamp(4.5rem, 11vw, 11rem)" }}>
               <span
                 className="inline-block"
                 style={{ opacity: showItsA ? 1 : 0, transform: showItsA ? "translateY(0)" : "translateY(40px)", transition: "opacity 0.7s var(--expo), transform 0.7s var(--expo)" }}
               >
                 {headline}{" "}
               </span>
+              {/* Cormorant font-normal italic — removes the bold optical conflict with the italic cut */}
               <em
-                className="inline-block italic"
+                className="inline-block italic font-normal"
                 style={{
                   color: showPulse ? "#C8B89A" : "var(--parchment)",
                   opacity: showThreshold ? 1 : 0,
                   transform: showThreshold ? "translateX(0)" : "translateX(80px)",
-                  textShadow: showPulse ? "0 0 40px rgba(200,184,154,0.3)" : "none",
-                  transition: "opacity 0.9s var(--expo), transform 0.9s var(--expo)",
+                  textShadow: showPulse ? "0 0 50px rgba(200,184,154,0.28)" : "none",
+                  transition: "opacity 0.9s var(--expo), transform 0.9s var(--expo), color 0.8s var(--expo), text-shadow 0.8s var(--expo)",
                 }}
               >
                 {emphasisWord}
@@ -91,27 +92,33 @@ export default function ThresholdStatementSection({
           </div>
 
           <div className="grid md:grid-cols-2 gap-16 md:gap-24">
+            {/* Left: contemplative quote — font-normal italic reads as witnessed, not declared */}
             <div
               style={{ opacity: showContent ? 1 : 0, transform: showContent ? "translateY(0)" : "translateY(32px)", transition: "opacity 1s var(--expo), transform 1s var(--expo)" }}
             >
-              <p className="font-heading text-[2.5rem] md:text-[3rem] text-parchment font-bold italic leading-tight mb-8">
-                {quote ? `\u201C${quote}\u201D` : "\u201CA genuine life threshold is not a problem to be solved. It is a passage to be moved through.\u201D"}
+              <span className="block mb-8 h-px bg-gold/45" style={{ width: "2.25rem" }} aria-hidden="true" />
+              <p
+                className="font-heading font-normal italic text-parchment leading-[1.2] mb-8"
+                style={{ fontSize: "clamp(1.75rem, 3.5vw, 2.75rem)" }}
+              >
+                {quote ? `\u201C${quote}\u201D` : "\u201CA genuine life threshold is not a problem to be solved.\u00A0It is a passage to be moved through.\u201D"}
               </p>
-              <p className="font-body text-[1rem] text-parchment/60 leading-relaxed font-medium">
+              <p className="font-body text-[0.9375rem] text-parchment/52 leading-relaxed font-normal">
                 {quoteCaption ?? "In traditional cultures, these crossings were marked, held, and guided. In modern life, they rarely are."}
               </p>
             </div>
+            {/* Right: what happens without structure */}
             <div
               className="space-y-0"
               style={{ opacity: showContentRight ? 1 : 0, transform: showContentRight ? "translateY(0)" : "translateY(32px)", transition: "opacity 1s var(--expo), transform 1s var(--expo)" }}
             >
-              <p className="font-body text-[0.9375rem] text-parchment/50 mb-8 font-bold uppercase tracking-widest">{collapseLabel}</p>
+              <p className="overline text-parchment/40 font-bold mb-10 tracking-[0.4em]">{collapseLabel}</p>
               {collapseItems.map(({ label, body }, i) => (
-                <div key={i} className="flex items-start gap-6 py-6 border-b border-parchment/[0.1]">
-                  <span className="font-heading text-parchment/40 text-2xl leading-none shrink-0 mt-0.5">{"\u2014"}</span>
+                <div key={i} className="flex items-start gap-6 py-6 border-b" style={{ borderColor: "rgba(181,168,152,0.18)" }}>
+                  <span className="font-heading italic font-normal text-parchment/35 text-2xl leading-none shrink-0 mt-0.5">{"\u2014"}</span>
                   <div>
-                    <p className="font-body text-[0.9375rem] text-parchment font-bold mb-1.5">{label}</p>
-                    <p className="font-body text-[0.875rem] text-parchment/40 leading-relaxed font-medium">{body}</p>
+                    <p className="font-heading italic font-normal text-[1.0625rem] text-parchment leading-snug mb-2">{label}</p>
+                    <p className="font-body text-[0.875rem] text-parchment/42 leading-relaxed font-normal">{body}</p>
                   </div>
                 </div>
               ))}

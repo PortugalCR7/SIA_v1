@@ -28,7 +28,7 @@ export default function SplitLeftSection({
   const imgRef = useRef<HTMLDivElement>(null);
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  // Parallax: image moves at 0.85x scroll speed
+  // Parallax: image moves at 0.15× container height offset
   useEffect(() => {
     const container = imgContainerRef.current;
     const img = imgRef.current;
@@ -47,7 +47,7 @@ export default function SplitLeftSection({
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
-  // Staggered reveal for numbered items: each staggers by 80ms
+  // Staggered reveal for items
   useEffect(() => {
     const els = itemsRef.current.filter(Boolean) as HTMLDivElement[];
     if (!els.length) return;
@@ -59,12 +59,12 @@ export default function SplitLeftSection({
             const idx = els.indexOf(entry.target as HTMLDivElement);
             setTimeout(() => {
               entry.target.classList.add("in");
-            }, idx * 80);
+            }, idx * 90);
             io.unobserve(entry.target);
           }
         });
       },
-      { threshold: 0.1, rootMargin: "0px 0px -50px 0px" }
+      { threshold: 0.08, rootMargin: "0px 0px -40px 0px" }
     );
 
     els.forEach((el) => io.observe(el));
@@ -73,6 +73,7 @@ export default function SplitLeftSection({
 
   return (
     <section className="split">
+      {/* ── Image panel ──────────────────────────────────────────────── */}
       <div ref={imgContainerRef} className="split-img relative min-h-[70vw] md:min-h-0 img-grain overflow-hidden">
         <div ref={imgRef} className="absolute inset-[-15%] will-change-transform">
           <Image
@@ -83,42 +84,86 @@ export default function SplitLeftSection({
             sizes="(max-width: 767px) 100vw, 50vw"
           />
         </div>
-        <div className="absolute inset-0 bg-gradient-to-r from-transparent to-ink/20" />
-        {/* Mobile: gradient overlay on bottom for compositional transition */}
-        <div className="absolute inset-x-0 bottom-0 h-32 bg-gradient-to-t from-[#F0EBE3] to-transparent md:hidden z-[3]" />
+        {/* Lateral gradient edge — creates atmospheric bleed into content panel */}
+        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-ink/30" />
+        {/* Mobile: bottom fade into cream */}
+        <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[#F0EBE3] to-transparent md:hidden z-[3]" />
       </div>
 
+      {/* ── Content panel ────────────────────────────────────────────── */}
       <div className="bg-cream flex flex-col justify-center px-8 md:px-16 xl:px-24 section-py">
+        {/* Section overline */}
         <p className="reveal overline text-ink/40 font-bold mb-10 flex items-center gap-6">
           <span className="rule-gold w-10" />
           {sectionLabel}
         </p>
-        <SplitHeading className="font-heading text-ink mb-10 text-balance font-bold"
-          style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)" }} stagger={60} baseDelay={80}>
+
+        {/* Section heading */}
+        <SplitHeading
+          className="font-heading text-ink mb-10 text-balance font-bold"
+          style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)" }}
+          stagger={60}
+          baseDelay={80}
+        >
           {heading}
         </SplitHeading>
+
+        {/* Intro body — Cormorant italic for the solemn, manifesto register */}
         {body && (
-          <p className="reveal delay-2 font-body text-[1.125rem] text-ink/70 leading-relaxed mb-12 max-w-xl font-medium">
+          <p className="reveal delay-2 font-heading italic font-normal text-[1.2rem] md:text-[1.3125rem] text-ink/70 leading-[1.65] mb-14 max-w-xl">
             {body}
           </p>
         )}
 
-        <div className="space-y-0 max-w-xl">
+        {/* Recognition items */}
+        <div className="max-w-xl">
           {items.map(({ num, label, body: itemBody }, i) => (
             <div
               key={num}
               ref={(el) => { itemsRef.current[i] = el; }}
-              className="reveal split-left-item flex items-start gap-8 py-8 border-b border-ink/[0.1] group cursor-default"
+              className="reveal split-left-item relative flex items-start gap-7 py-8 border-b group cursor-default"
+              style={{ borderColor: "rgba(181,168,152,0.35)" }}
             >
-              <span className="font-heading text-ink/20 text-3xl leading-none shrink-0 mt-1 select-none group-hover:text-ink/40 transition-colors duration-300">{num}</span>
+              {/* Ghost numeral — large, background, barely there */}
+              <span
+                className="absolute -right-2 top-1/2 -translate-y-1/2 font-heading font-bold select-none pointer-events-none transition-opacity duration-500 group-hover:opacity-[0.07]"
+                style={{
+                  fontSize: "clamp(4rem, 8vw, 7rem)",
+                  lineHeight: 1,
+                  letterSpacing: "-0.05em",
+                  color: "var(--ink)",
+                  opacity: 0.03,
+                }}
+                aria-hidden="true"
+              >
+                {num}
+              </span>
+
+              {/* Inline numeral — small mono overline treatment */}
+              <span className="font-mono text-[0.6rem] tracking-[0.3em] text-ink/25 leading-none shrink-0 mt-[0.35rem] select-none group-hover:text-ink/50 transition-colors duration-400">
+                {num.padStart(2, "0")}
+              </span>
+
               <div className="split-left-item-content relative">
                 <span className="split-left-gold-line" />
-                <p className="font-heading text-[1.5rem] text-ink mb-2 font-bold split-left-title">{label}</p>
-                <p className="font-body text-[0.9375rem] text-ink/50 leading-relaxed font-medium split-left-body">{itemBody}</p>
+                {/* Label in Cormorant italic — ceremonial, poetic */}
+                <p className="font-heading italic text-[1.4375rem] leading-[1.2] text-ink mb-2.5 font-semibold split-left-title">
+                  {label}
+                </p>
+                <p className="font-body text-[0.9375rem] text-ink/55 leading-relaxed font-normal split-left-body">
+                  {itemBody}
+                </p>
               </div>
             </div>
           ))}
         </div>
+
+        {/* Closing compositional rule */}
+        <div
+          className="reveal delay-4 mt-14 h-px bg-gold/50"
+          style={{ width: "clamp(2rem, 5vw, 3rem)" }}
+          aria-hidden="true"
+        />
       </div>
     </section>
   );

@@ -54,7 +54,7 @@ export default function ProcessSection({
       gsap.fromTo(ghosts,
         { opacity: 0, y: 40, scale: 1 },
         {
-          opacity: 0.09, y: 0, scale: 1.04, duration: 2, stagger: 0.25, ease: "power2.out",
+          opacity: 0.07, y: 0, scale: 1.04, duration: 2, stagger: 0.25, ease: "power2.out",
           scrollTrigger: { trigger: section, start: "top 80%", toggleActions: "play none none none" },
         }
       );
@@ -94,51 +94,140 @@ export default function ProcessSection({
     return () => ctx.revert();
   }, [isMobile, phases.length]);
 
+  /* ── Mobile layout ───────────────────────────────────────────────────── */
   if (isMobile) {
     return (
       <section className="bg-cream section-py px-6">
         <p className="reveal overline text-ink/40 font-bold mb-12 flex items-center gap-6">
           <span className="rule-gold w-10" />{sectionLabel}
         </p>
-        <SplitHeading className="font-heading text-ink mb-6 text-balance font-bold"
-          style={{ fontSize: "clamp(3rem, 6vw, 5rem)" }} stagger={80} baseDelay={80}>
+        <SplitHeading
+          className="font-heading text-ink mb-6 text-balance font-bold"
+          style={{ fontSize: "clamp(3rem, 6vw, 5rem)" }}
+          stagger={80}
+          baseDelay={80}
+        >
           {heading}
         </SplitHeading>
         {subheading && (
-          <p className="reveal delay-2 font-body text-[1.125rem] text-ink/50 max-w-3xl mb-16 leading-relaxed font-medium">
+          <p className="reveal delay-2 font-heading italic font-normal text-[1.125rem] text-ink/55 max-w-3xl mb-16 leading-relaxed">
             {subheading}
           </p>
         )}
+
         {phases.map(({ numeral, name, body }, i) => (
-          <div key={numeral} className={`reveal delay-${i + 1} relative py-10 border-b border-ink/[0.1]`}>
+          <div
+            key={numeral}
+            className={`reveal delay-${i + 1} relative py-10 border-b`}
+            style={{ borderColor: "rgba(181,168,152,0.35)" }}
+          >
+            {/* Phase overline */}
             <p className="overline text-ink/30 font-bold mb-4">{`Phase ${numeral}`}</p>
-            <h3 className="font-heading text-[2.5rem] text-ink mb-4 font-bold">{name}</h3>
-            <p className="font-body text-[1rem] text-ink/70 leading-relaxed font-medium">{body}</p>
+
+            {/* Gold micro-rule — breath between overline and title */}
+            <span
+              className="block mb-5 h-px bg-gold/55"
+              style={{ width: "2rem" }}
+              aria-hidden="true"
+            />
+
+            {/* Phase name — Cormorant italic for the ceremonial register */}
+            <h3 className="font-heading italic text-[2.5rem] leading-[1.1] text-ink mb-5 font-semibold">
+              {name}
+            </h3>
+            <p className="font-body text-[0.9375rem] text-ink/70 leading-relaxed font-normal">{body}</p>
           </div>
         ))}
       </section>
     );
   }
 
+  /* ── Desktop horizontal scroll ───────────────────────────────────────── */
   return (
     <section ref={sectionRef} className="arc-section bg-cream overflow-hidden relative">
-      <div ref={trackRef} className="arc-track flex items-stretch relative" style={{ width: `${phases.length * 100}vw`, minHeight: "100vh" }}>
-        <div className="absolute top-[55%] left-[6vw] pointer-events-none z-10" style={{ width: "calc(100% - 12vw)", height: "1px" }}>
-          <div ref={connectorRef} className="w-full h-full origin-left" style={{ transform: "scaleX(0)", background: "linear-gradient(90deg, var(--gold) 0%, var(--gold-lt) 50%, var(--gold) 100%)", opacity: 0.35 }} />
+      <div
+        ref={trackRef}
+        className="arc-track flex items-stretch relative"
+        style={{ width: `${phases.length * 100}vw`, minHeight: "100vh" }}
+      >
+        {/* Gold connector line that draws across all panels */}
+        <div
+          className="absolute top-[55%] left-[6vw] pointer-events-none z-10"
+          style={{ width: "calc(100% - 12vw)", height: "1px" }}
+        >
+          <div
+            ref={connectorRef}
+            className="w-full h-full origin-left"
+            style={{
+              transform: "scaleX(0)",
+              background: "linear-gradient(90deg, var(--gold) 0%, var(--gold-lt) 50%, var(--gold) 100%)",
+              opacity: 0.45,
+            }}
+          />
         </div>
+
         {phases.map(({ numeral, name, body }) => (
-          <div key={numeral} className="arc-panel relative flex flex-col justify-center px-[8vw]" style={{ width: "100vw", minHeight: "100vh" }}>
-            <span className="phase-ghost-h absolute select-none pointer-events-none" style={{ right: "-8vw", top: "50%", transform: "translateY(-50%)", fontFamily: "'Cormorant Garamond', serif", fontSize: "clamp(16rem, 30vw, 32rem)", fontWeight: 300, lineHeight: 0.8, color: "var(--ink)", opacity: 0, letterSpacing: "-0.06em" }}>{numeral}</span>
+          <div
+            key={numeral}
+            className="arc-panel relative flex flex-col justify-center px-[8vw]"
+            style={{ width: "100vw", minHeight: "100vh" }}
+          >
+            {/* Ghost numeral watermark — large, right-bled, barely there */}
+            <span
+              className="phase-ghost-h absolute select-none pointer-events-none"
+              style={{
+                right: "-8vw",
+                top: "50%",
+                transform: "translateY(-50%)",
+                fontFamily: "'Cormorant Garamond', serif",
+                fontSize: "clamp(16rem, 30vw, 32rem)",
+                fontWeight: 300,
+                lineHeight: 0.8,
+                color: "var(--ink)",
+                opacity: 0,
+                letterSpacing: "-0.06em",
+              }}
+            >
+              {numeral}
+            </span>
+
+            {/* Node dot + ring on connector line */}
             <div className="absolute top-[55%] left-[6vw] -translate-y-1/2 z-20">
               <span className="relative inline-block">
-                <span className="arc-node-ring absolute inset-0 rounded-full border border-gold pointer-events-none" style={{ opacity: 0, transformOrigin: "center" }} />
-                <span className="arc-node block w-3 h-3 rounded-full border-2 border-ink/20 bg-cream transition-colors duration-500" style={{ transform: "scale(0.6)" }} />
+                <span
+                  className="arc-node-ring absolute inset-0 rounded-full border border-gold pointer-events-none"
+                  style={{ opacity: 0, transformOrigin: "center" }}
+                />
+                <span
+                  className="arc-node block w-3 h-3 rounded-full border-2 border-ink/20 bg-cream transition-colors duration-500"
+                  style={{ transform: "scale(0.6)" }}
+                />
               </span>
             </div>
+
+            {/* Phase content */}
             <div className="relative z-10 max-w-2xl">
-              <p className="overline text-ink/30 font-bold mb-8">{`Phase ${numeral}`}</p>
-              <h3 className="font-heading text-ink mb-8 font-bold" style={{ fontSize: "clamp(3rem, 5vw, 5rem)" }}>{name}</h3>
-              <p className="font-body text-[1.0625rem] text-ink/70 leading-relaxed max-w-lg font-medium">{body}</p>
+              {/* Phase overline */}
+              <p className="overline text-ink/30 font-bold mb-5">{`Phase ${numeral}`}</p>
+
+              {/* Gold micro-rule — typographic breath between overline and title */}
+              <span
+                className="block mb-7 h-px bg-gold/55"
+                style={{ width: "2.25rem" }}
+                aria-hidden="true"
+              />
+
+              {/* Phase name — Cormorant italic for soul */}
+              <h3
+                className="font-heading italic text-ink mb-8 font-semibold"
+                style={{ fontSize: "clamp(3rem, 5vw, 5rem)", lineHeight: 1.05, letterSpacing: "-0.02em" }}
+              >
+                {name}
+              </h3>
+
+              <p className="font-body text-[1.0625rem] text-ink/72 leading-relaxed max-w-lg font-normal">
+                {body}
+              </p>
             </div>
           </div>
         ))}

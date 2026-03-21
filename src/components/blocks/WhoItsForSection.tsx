@@ -58,25 +58,27 @@ export default function WhoItsForSection({
       </div>
       <div className="bg-cream flex flex-col justify-center px-8 md:px-16 xl:px-24 section-py">
         <p className="reveal overline text-ink/40 font-bold mb-10 flex items-center gap-6"><span className="rule-gold w-10" />{sectionLabel}</p>
-        <h2 className="reveal delay-1 font-heading text-ink mb-8 font-bold" style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", lineHeight: "1.05" }}>
+        <h2 className="reveal delay-1 font-heading text-ink mb-10 font-bold" style={{ fontSize: "clamp(2.5rem, 5vw, 4rem)", lineHeight: "1.05" }}>
           {heading.split("\n")[0] ?? heading}
           {heading.split("\n")[1] && (
             <>
               <br />
-              <em className="italic font-bold">{heading.split("\n")[1]}</em>
+              {/* Second line italic — shifts tone from statement to invitation */}
+              <em className="italic font-normal">{heading.split("\n")[1]}</em>
             </>
           )}
         </h2>
         <div ref={listRef} className="space-y-0 max-w-xl reveal delay-3">
           {items.map(({ text }, i) => (
-            <div key={i} className="flex items-start gap-6 py-6 border-b border-ink/[0.1]">
+            <div key={i} className="flex items-start gap-6 py-[1.375rem] border-b" style={{ borderColor: "rgba(181,168,152,0.35)" }}>
               <span
-                className="font-heading text-2xl mt-0.5 leading-none shrink-0 transition-colors duration-700"
-                style={{ color: dashActive[i] ? "var(--gold)" : "rgba(0,0,0,0.15)" }}
+                className="font-heading italic text-2xl mt-0.5 leading-none shrink-0 transition-colors duration-700"
+                style={{ color: dashActive[i] ? "var(--gold)" : "rgba(0,0,0,0.12)" }}
               >
                 {"\u2014"}
               </span>
-              <p className="font-body text-[1rem] text-ink font-bold leading-relaxed">{text}</p>
+              {/* Items as Cormorant italic — they read as recognitions, not requirements */}
+              <p className="font-heading italic font-normal text-[1.125rem] text-ink leading-[1.5]">{text}</p>
             </div>
           ))}
         </div>

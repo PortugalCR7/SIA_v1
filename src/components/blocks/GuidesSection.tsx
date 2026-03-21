@@ -68,8 +68,9 @@ export default function GuidesSection({
               <div className="h-px w-0 bg-gradient-to-r from-[#C8B89A] to-transparent mb-8 transition-[width] duration-500 ease-out group-hover:w-full" />
 
               <p className="overline text-parchment/30 font-bold mb-4 tracking-widest">{role}</p>
-              <h3 className="font-heading text-[1.75rem] text-parchment mb-6 font-bold">{title}</h3>
-              <p className="font-body text-[0.9375rem] text-parchment/40 leading-relaxed font-medium">{body}</p>
+              {/* Guide title — Cormorant italic, names the quality of presence */}
+              <h3 className="font-heading italic font-semibold text-[1.75rem] leading-[1.15] text-parchment mb-5">{title}</h3>
+              <p className="font-body text-[0.9375rem] text-parchment/55 leading-relaxed font-normal">{body}</p>
             </div>
           ))}
         </div>

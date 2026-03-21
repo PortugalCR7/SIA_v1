@@ -1,4 +1,5 @@
-# You've Done the Work. But Something in You Knows You Haven't Crossed Yet.
+# You've Done the Work. 
+**But Something in You Knows You Haven't Crossed Yet.**
 
 A six-month initiation for people at a real threshold in their life — not seeking more insight, but a way to move through.
 

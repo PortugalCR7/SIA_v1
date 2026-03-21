@@ -35,8 +35,8 @@ function HeroHeadline({ headline, subheadline }: { headline: string; subheadline
 
   return (
     <h1
-      className="font-heading text-parchment leading-[0.9] text-balance mb-12 font-bold"
-      style={{ fontSize: "clamp(3.5rem, 9vw, 9rem)", textShadow: "0 10px 30px rgba(0,0,0,0.5)" }}
+      className="font-heading text-parchment leading-[0.88] text-balance mb-10 font-bold"
+      style={{ fontSize: "clamp(3.5rem, 9vw, 9rem)", textShadow: "0 12px 40px rgba(0,0,0,0.65)" }}
     >
       <span
         className="inline-block"
@@ -57,18 +57,19 @@ function HeroHeadline({ headline, subheadline }: { headline: string; subheadline
       >
         {" "}{headline.split("\n")[1] ?? ""}
       </span>
+      {/* Subheadline — Cormorant italic for the ceremonial weight of the italic cut */}
       <em
-        className="block font-medium italic text-parchment/80 mt-4"
-        style={{ fontSize: "clamp(2.25rem, 5vw, 5rem)" }}
+        className="block font-heading font-normal italic text-parchment/75 mt-5"
+        style={{ fontSize: "clamp(1.875rem, 4.5vw, 4.25rem)", lineHeight: 1.1 }}
       >
         {subWords.map((word, i) => (
           <span
             key={i}
-            className="inline-block mr-[0.3em]"
+            className="inline-block mr-[0.28em]"
             style={{
               opacity: animate ? 1 : 0,
-              transform: animate ? "translateY(0)" : "translateY(16px)",
-              transition: `opacity 0.6s cubic-bezier(0.16,1,0.3,1) ${0.5 + i * 0.04}s, transform 0.6s cubic-bezier(0.16,1,0.3,1) ${0.5 + i * 0.04}s`,
+              transform: animate ? "translateY(0)" : "translateY(18px)",
+              transition: `opacity 0.7s cubic-bezier(0.16,1,0.3,1) ${0.52 + i * 0.042}s, transform 0.7s cubic-bezier(0.16,1,0.3,1) ${0.52 + i * 0.042}s`,
             }}
           >
             {word}
@@ -81,16 +82,15 @@ function HeroHeadline({ headline, subheadline }: { headline: string; subheadline
 
 function HeroStatBar({ statBar }: { statBar: StatItem[] }) {
   return (
-    <div className="hero-stat-bar flex items-center justify-start mt-14 mb-6">
+    <div className="hero-stat-bar flex items-center justify-start mt-2 mb-6">
       {statBar.map(({ label, value }, i) => (
         <div
           key={label}
-          className={`flex flex-col gap-1.5 px-6 md:px-10 ${
-            i > 0 ? "border-l border-parchment/[0.12]" : ""
-          } ${i === 0 ? "pl-0" : ""}`}
+          className={`flex flex-col gap-2 px-6 md:px-10 ${i > 0 ? "border-l border-parchment/[0.1]" : ""} ${i === 0 ? "pl-0" : ""}`}
         >
-          <span className="overline text-parchment/30 font-bold text-[0.5rem]">{label}</span>
-          <span className="font-heading text-parchment text-lg md:text-xl font-bold leading-none">{value}</span>
+          <span className="overline text-parchment/35 tracking-[0.45em] text-[0.5rem]">{label}</span>
+          {/* Cormorant italic numerals for editorial gravitas */}
+          <span className="font-heading italic text-parchment text-[1.375rem] md:text-[1.625rem] font-normal leading-none" style={{ letterSpacing: "-0.02em" }}>{value}</span>
         </div>
       ))}
     </div>
@@ -135,18 +135,18 @@ export default function HeroSection({
 
   return (
     <section className="relative min-h-screen flex flex-col">
-      {/* Video background with image fallback */}
+      {/* Image + video background */}
       <div className="absolute inset-0 img-grain">
         <Image
           src="/images/hero-mountain.png"
           alt="A lone figure stands above the clouds at the threshold"
           fill
-          className="object-cover object-center img-warm brightness-[0.65]"
+          className="object-cover object-center img-warm brightness-[0.55]"
           priority
           sizes="100vw"
         />
         <video
-          className="hero-video absolute inset-0 w-full h-full object-cover img-warm brightness-[0.65]"
+          className="hero-video absolute inset-0 w-full h-full object-cover img-warm brightness-[0.55]"
           autoPlay
           muted
           loop
@@ -158,7 +158,18 @@ export default function HeroSection({
           <source src="/videos/hero-loop.mp4" type="video/mp4" />
           <source src="/videos/hero-loop.webm" type="video/webm" />
         </video>
-        <div className="absolute inset-0 bg-gradient-to-b from-ink/90 via-ink/30 to-ink" />
+
+        {/* Vertical gradient: heavy dark at top and bottom, atmospheric middle */}
+        <div className="absolute inset-0 bg-gradient-to-b from-ink/85 via-ink/15 to-ink" />
+
+        {/* Radial vignette: darkens corners for cinematic depth */}
+        <div
+          className="absolute inset-0"
+          style={{
+            background: "radial-gradient(ellipse 70% 80% at 50% 50%, transparent 30%, rgba(0,0,0,0.55) 100%)",
+          }}
+          aria-hidden="true"
+        />
       </div>
 
       {/* 444 Ghost Watermark */}
@@ -178,8 +189,9 @@ export default function HeroSection({
       <Nav siteTitle="Soul Initiation Academy" />
 
       <div className="relative z-10 flex-1 flex flex-col justify-end px-6 md:px-14 pb-8 md:pb-16 pt-40">
+        {/* Section overline */}
         <p
-          className="overline text-parchment/60 font-semibold mb-10 flex items-center gap-6"
+          className="overline text-parchment/50 font-semibold mb-10 flex items-center gap-6"
           style={{
             opacity: ctaVisible ? 1 : 0,
             transform: ctaVisible ? "translateY(0)" : "translateY(16px)",
@@ -201,11 +213,22 @@ export default function HeroSection({
             transition: "opacity 1s cubic-bezier(0.16,1,0.3,1) 0.1s, transform 1s cubic-bezier(0.16,1,0.3,1) 0.1s",
           }}
         >
+          {/* Editorial gold separator before CTA block */}
+          <div
+            className="mb-8 h-px bg-gold/40"
+            style={{ width: "clamp(2.5rem, 8vw, 5rem)" }}
+            aria-hidden="true"
+          />
+
           <a
             href={ctaUrl}
-            className="btn-fill group font-body text-[11px] tracking-[0.35em] uppercase px-12 py-5 bg-parchment text-ink active:scale-[0.98] transition-transform duration-200 cursor-pointer font-bold"
+            className="btn-fill group font-body text-[10.5px] tracking-[0.4em] uppercase px-12 py-[1.1rem] bg-parchment text-ink active:scale-[0.98] transition-transform duration-200 cursor-pointer font-bold"
           >
-            <span className="absolute inset-0 bg-gold-lt" style={{ transform: "translateX(-102%)", transition: "transform 0.5s var(--expo-out)" }} aria-hidden />
+            <span
+              className="absolute inset-0 bg-gold-lt"
+              style={{ transform: "translateX(-102%)", transition: "transform 0.5s var(--expo-out)" }}
+              aria-hidden
+            />
             <span className="relative z-10 flex items-center gap-4">
               {ctaLabel}
               <span className="transition-transform duration-300 group-hover:translate-x-2">{"\u2192"}</span>

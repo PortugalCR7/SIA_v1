@@ -79,11 +79,15 @@ function StatCard({ label, value, note, index }: { label: string; value: string;
 
   return (
     <div ref={ref} className={`reveal delay-${Math.min(index + 1, 5)} p-8 md:p-10 ${getStatBorderClasses(index)}`}>
-      <p className="overline text-parchment/50 font-bold mb-4">{label}</p>
-      <p className="font-heading text-parchment leading-tight mb-3 font-bold" style={{ fontSize: "clamp(2rem, 4.5vw, 3.5rem)" }}>
+      <p className="overline text-parchment/45 font-bold mb-5">{label}</p>
+      {/* Cormorant italic — counting numerals in the ceremonial register */}
+      <p
+        className="font-heading italic font-normal text-parchment leading-[1.0] mb-4"
+        style={{ fontSize: "clamp(2rem, 4.5vw, 3.5rem)", letterSpacing: "-0.02em" }}
+      >
         {hasNumber ? `${displayNum}${suffix}` : value}
       </p>
-      <p className="font-body text-[0.875rem] text-parchment/50 leading-relaxed font-medium">{note}</p>
+      <p className="font-body text-[0.875rem] text-parchment/52 leading-relaxed font-normal">{note}</p>
     </div>
   );
 }

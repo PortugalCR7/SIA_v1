@@ -90,16 +90,25 @@ export default function FinalCTASection({
           <span className="rule-gold opacity-40 w-10" />
         </p>
 
+        {/* Gold micro-rule above headline — breath before the final statement */}
+        <div className="reveal flex justify-center mb-10">
+          <span className="h-px bg-gold/45" style={{ width: "2.5rem" }} aria-hidden="true" />
+        </div>
+
         {/* Primary headline — the emotional close */}
-        <SplitHeading className="font-heading text-parchment leading-[1.0] mb-12 font-bold text-balance"
-          style={{ fontSize: "clamp(3rem, 7vw, 7rem)", textShadow: "0 10px 40px rgba(0,0,0,0.6)" }} stagger={45} baseDelay={0}>
+        <SplitHeading
+          className="font-heading text-parchment leading-[1.0] mb-12 font-bold text-balance"
+          style={{ fontSize: "clamp(3rem, 7vw, 7rem)", textShadow: "0 10px 40px rgba(0,0,0,0.6)" }}
+          stagger={45}
+          baseDelay={0}
+        >
           {headline}
         </SplitHeading>
 
-        {/* Body copy */}
+        {/* Body copy — Cormorant italic for the final invitation */}
         {body && (
           <div className="reveal delay-1 max-w-2xl mx-auto mb-16 space-y-5">
-            <p className="font-body text-[1.0625rem] text-parchment/60 leading-relaxed font-medium">
+            <p className="font-heading italic font-normal text-[1.1875rem] text-parchment/62 leading-[1.7]">
               {body}
             </p>
           </div>

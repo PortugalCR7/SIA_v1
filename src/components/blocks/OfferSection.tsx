@@ -96,25 +96,31 @@ export default function OfferSection({
         )}
         <div className="grid md:grid-cols-2 gap-10 md:gap-16">
           <div className="reveal delay-3 bg-cream p-10 md:p-14 shadow-lg border border-ink/[0.05]">
-            <h3 className="font-heading text-[2.25rem] text-ink mb-10 font-bold">{stepsHeading}</h3>
+            {/* Steps heading — Cormorant italic */}
+            <h3 className="font-heading italic font-semibold text-[2.125rem] leading-[1.1] text-ink mb-10">{stepsHeading}</h3>
             <div ref={stepsRef} className="relative">
               {/* Vertical timeline spine */}
               <div
                 ref={lineRef}
-                className="absolute top-3 bottom-8 w-px bg-gradient-to-b from-ink/25 via-ink/12 to-transparent origin-top pointer-events-none"
+                className="absolute top-3 bottom-8 w-px bg-gradient-to-b from-gold/50 via-gold/20 to-transparent origin-top pointer-events-none"
                 style={{ left: "15px", transform: "scaleY(0)", transition: "transform 1.5s cubic-bezier(0.16,1,0.3,1) 0.2s" }}
               />
               {steps.map(({ label, body }, i) => (
-                <div key={i} className="flex items-start gap-8 py-6 border-b border-ink/[0.08] relative">
+                <div
+                  key={i}
+                  className="flex items-start gap-8 py-6 border-b relative"
+                  style={{ borderColor: "rgba(181,168,152,0.3)" }}
+                >
+                  {/* Step numeral — Cormorant italic, opacity increases for progression */}
                   <p
-                    className="font-heading text-[2rem] font-bold shrink-0 w-8 text-center"
-                    style={{ color: `rgba(27,25,22,${0.15 + i * 0.07})` }}
+                    className="font-heading italic font-normal text-[2rem] shrink-0 w-8 text-center leading-none mt-0.5"
+                    style={{ color: `rgba(0,0,0,${0.12 + i * 0.08})` }}
                   >
                     {i + 1}
                   </p>
                   <div>
-                    <p className="font-body text-[1rem] text-ink font-bold mb-2 uppercase tracking-wide">{label}</p>
-                    <p className="font-body text-[0.875rem] text-ink/50 font-medium">{body}</p>
+                    <p className="font-body text-[0.9375rem] text-ink font-bold mb-2 uppercase tracking-[0.12em]">{label}</p>
+                    <p className="font-body text-[0.875rem] text-ink/52 font-normal">{body}</p>
                   </div>
                 </div>
               ))}
@@ -130,8 +136,14 @@ export default function OfferSection({
             </div>
             <div>
               <p className="overline text-parchment/40 font-bold mb-8">{investmentLabel}</p>
-              <p className="font-heading text-parchment text-3xl md:text-5xl font-bold mb-6">{investmentHeadline}</p>
-              <p className="font-body text-[0.9375rem] text-parchment/40 leading-relaxed font-medium mb-12">
+              {/* Investment headline — Cormorant italic for the ceremonial weight of commitment */}
+              <p
+                className="font-heading italic font-normal text-parchment leading-[1.1] mb-6"
+                style={{ fontSize: "clamp(2rem, 4vw, 3.25rem)", letterSpacing: "-0.02em" }}
+              >
+                {investmentHeadline}
+              </p>
+              <p className="font-body text-[0.9375rem] text-parchment/45 leading-relaxed font-normal mb-12">
                 {investmentBody}
               </p>
             </div>

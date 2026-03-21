@@ -132,23 +132,23 @@ export default function SplitRightSection({
           {heading}
         </SplitHeading>
         {body && (
-          <p className="reveal delay-2 font-body text-[1.125rem] text-ink/70 leading-relaxed mb-14 max-w-xl font-medium">
+          <p className="reveal delay-2 font-heading italic font-normal text-[1.2rem] text-ink/68 leading-[1.65] mb-14 max-w-xl">
             {body}
           </p>
         )}
 
-        <div ref={gridRef} className="grid grid-cols-2 gap-0 max-w-xl border border-ink/[0.1]">
+        <div ref={gridRef} className="grid grid-cols-2 gap-0 max-w-xl" style={{ border: "1px solid rgba(181,168,152,0.35)" }}>
           {/* Left: This is not */}
           <div className="bg-cream p-8">
             <p className="overline text-ink/40 font-bold mb-6">This is not</p>
             <div className="space-y-4">
               {notItems.map(({ text }) => (
                 <div key={text} className="not-item flex items-start gap-3">
-                  <span className="text-ink/30 mt-0.5 text-lg leading-none shrink-0">{"\u00D7"}</span>
-                  <p className="relative font-body text-[0.9375rem] text-ink/60 leading-relaxed font-medium">
+                  <span className="text-ink/25 mt-0.5 text-lg leading-none shrink-0">{"\u00D7"}</span>
+                  <p className="relative font-body text-[0.9375rem] text-ink/55 leading-relaxed font-normal">
                     {text}
                     <span
-                      className="strike-line absolute left-0 top-1/2 h-[1.5px] w-full bg-ink/50 origin-left"
+                      className="strike-line absolute left-0 top-1/2 h-[1.5px] w-full bg-ink/40 origin-left"
                       style={{ transform: "scaleX(0) translateY(-50%)" }}
                     />
                   </p>
@@ -157,14 +157,14 @@ export default function SplitRightSection({
             </div>
           </div>
 
-          {/* Right: This is */}
+          {/* Right: This is — Cormorant italic for the ceremonial register */}
           <div className="bg-ink p-8">
-            <p className="overline text-parchment/50 font-bold mb-6">This is</p>
+            <p className="overline text-parchment/45 font-bold mb-6">This is</p>
             <div className="space-y-4">
               {isItems.map(({ text }) => (
                 <div key={text} className="is-item flex items-start gap-3">
-                  <span className="text-parchment/40 text-xl font-heading shrink-0">{"\u2014"}</span>
-                  <p className="font-body text-[0.9375rem] text-parchment/80 leading-relaxed font-bold">{text}</p>
+                  <span className="font-heading italic text-parchment/40 text-xl leading-none shrink-0 mt-0.5">{"\u2014"}</span>
+                  <p className="font-heading italic font-normal text-[1rem] text-parchment/88 leading-snug">{text}</p>
                 </div>
               ))}
             </div>

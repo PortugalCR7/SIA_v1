@@ -32,11 +32,26 @@ export default function TestimonialsSection({
         </SplitHeading>
         <div className="grid md:grid-cols-3 gap-8 md:items-start">
           {testimonials.map(({ quote, name, role }, i) => (
-            <div key={i} className={`t-card group reveal delay-${i + 1} relative overflow-hidden bg-parchment p-10 md:p-12 border border-ink/[0.08] hover:border-ink/[0.18] transition-colors duration-500 shadow-sm ${offsets[i] ?? ""}`}>
-              {/* Full-bleed typographic gesture — absolute behind content */}
-              <span aria-hidden="true" className="absolute -top-6 -left-3 font-heading text-[9rem] text-ink/[0.07] group-hover:text-ink/[0.13] transition-colors duration-500 leading-none pointer-events-none select-none">&ldquo;</span>
-              <p className="relative font-heading text-[1.5rem] md:text-[1.75rem] text-ink italic leading-snug mb-10 font-bold mt-10">{quote}</p>
-              <div className="flex items-center gap-4"><span className="rule-gold opacity-40 w-8" /><p className="overline text-ink/40 font-bold">{name} {"\u2014"} {role}</p></div>
+            <div
+              key={i}
+              className={`t-card group reveal delay-${i + 1} relative overflow-hidden bg-parchment p-10 md:p-12 transition-colors duration-500 shadow-sm ${offsets[i] ?? ""}`}
+              style={{ border: "1px solid rgba(181,168,152,0.3)" }}
+            >
+              {/* Typographic ghost quote mark */}
+              <span
+                aria-hidden="true"
+                className="absolute -top-6 -left-3 font-heading text-[9rem] text-ink/[0.06] group-hover:text-ink/[0.11] transition-colors duration-500 leading-none pointer-events-none select-none"
+              >
+                &ldquo;
+              </span>
+              {/* Quote — font-normal italic: the words of someone who has passed through */}
+              <p className="relative font-heading italic font-normal text-[1.5rem] md:text-[1.6875rem] text-ink leading-[1.35] mb-10 mt-10">
+                {quote}
+              </p>
+              <div className="flex items-center gap-4">
+                <span className="rule-gold opacity-35 w-8" />
+                <p className="overline text-ink/38 font-bold">{name}{role ? ` \u2014 ${role}` : ""}</p>
+              </div>
             </div>
           ))}
         </div>
