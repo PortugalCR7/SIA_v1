@@ -23,7 +23,7 @@ export const Testimonials: CollectionConfig = {
     },
     {
       name: 'quote',
-      type: 'richText',
+      type: 'textarea',
       required: true,
     },
     {
