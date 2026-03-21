@@ -41,6 +41,7 @@ Migrate all hardcoded content to Payload CMS, split the monolithic page into com
 | `siteTitle` | text | "Soul Initiation Academy" |
 | `contactEmail` | text | "apply@soulinitiationacademy.com" |
 | `copyrightText` | text | Footer copyright line |
+| `establishedLine` | text | Decorative text e.g. "444 · EST. MMXXIV" |
 | `brandTagline` | text | "A private institution for mature soul-initiation practices." |
 | `navLinks` | array | `[{ label: text, url: text, isExternal: checkbox }]` |
 | `socialLinks` | array | `[{ platform: select(instagram/linkedin/twitter/youtube), url: text }]` |
@@ -91,12 +92,15 @@ name, slug, tagline, description (richText), price, ctaLabel, ctaUrl, features (
 Each block has `blockType` and its own fields:
 
 **`hero`**
+- `sectionLabel`: text — "Soul Initiation Academy"
 - `headline`: text — "You've Done the Work."
 - `subheadline`: text — "But Something in You Knows You Haven't Crossed Yet."
 - `statBar`: array → `[{ label: text, value: text }]`
 - `ctaLabel`: text
 - `ctaUrl`: text
 - `backgroundImage`: upload → media
+- `backgroundVideoMp4`: upload → media (optional — hero uses video with image fallback)
+- `backgroundVideoWebm`: upload → media (optional)
 
 **`marquee`**
 - References `SiteConfig.marqueeRow1` and `marqueeRow2` — no fields needed. This block is a signal to render the Marquee using SiteConfig data.
@@ -175,7 +179,9 @@ Each block has `blockType` and its own fields:
 - `faqs`: relationship → `faqs` collection (hasMany: true)
 
 **`finalCta`**
+- `sectionLabel`: text — overline text (e.g. "The Threshold Is Here")
 - `headline`: text
+- `body`: textarea — optional body paragraphs
 - `ctaLabel`: text
 - `ctaUrl`: text
 
@@ -233,6 +239,9 @@ src/
 │   │   └── FinalCTASection.tsx
 │   ├── Nav.tsx                           ← extracted from page.tsx
 │   ├── Footer.tsx                        ← extracted from page.tsx
+│   ├── NavMonogram.tsx                   ← extracted, shared by Nav + Footer
+│   ├── RevealProvider.tsx                ← NEW, wraps page output, calls useReveal
+│   ├── SplitHeading.tsx                  ← unchanged
 │   ├── FAQAccordion.tsx                  ← updated to accept props
 │   ├── PageLoader.tsx                    ← unchanged
 │   └── ScrollIndicator.tsx               ← unchanged
@@ -321,10 +330,36 @@ Step 5: Verify
 
 ---
 
+## Shared Components
+
+These components exist and must be preserved in the migration:
+
+- `SplitHeading.tsx` — `"use client"` word-split animation component used across many sections. Receives heading text as `children` prop. Unchanged.
+- `NavMonogram` — inline SVG component used by both Nav and Footer. Extract to `src/components/NavMonogram.tsx` as a shared component.
+- `useReveal` hook — global DOM observer for `.reveal` classes. Extract to a `RevealProvider` client wrapper component that wraps the block output in `page.tsx`, since the Server Component cannot call hooks.
+- `PageLoader`, `ScrollIndicator` — unchanged.
+
+### RevealProvider pattern
+
+```tsx
+// src/components/RevealProvider.tsx
+"use client";
+export default function RevealProvider({ children }) {
+  useReveal(); // runs once, observes .reveal elements globally
+  return <>{children}</>;
+}
+```
+
+`page.tsx` wraps its output in `<RevealProvider>...</RevealProvider>`.
+
 ## What NOT to change
 
 - Animation logic (GSAP, ScrollTrigger, IntersectionObserver) — stays exactly as-is
 - Visual design, CSS, Tailwind classes — no changes
-- `useReveal` hook — moves into a shared hooks file or stays in a client component
-- `PageLoader`, `ScrollIndicator` — unchanged
+- `SplitHeading` component — unchanged, receives CMS text as children
 - Image assets in `/public/images/` — stay as static files, referenced by Media collection URLs or fallback paths
+- Alt text stored on Media documents in Payload, read by components via the media relationship
+
+## Migration Atomicity
+
+Steps 2 and 3 (extract components + refactor page.tsx) must be executed as a single atomic commit. The approach: copy functions to new files first (Step 2), then switch page.tsx to imports and remove the inline functions (Step 3) in the same commit. This prevents a broken intermediate state where page.tsx references functions that have been moved.
