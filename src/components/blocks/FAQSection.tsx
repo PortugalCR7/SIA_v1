@@ -5,7 +5,8 @@ import FAQAccordion from "@/components/FAQAccordion";
 
 interface FAQ {
   question: string;
-  answer: string[];
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any -- Lexical richText JSON
+  answer: any;
 }
 
 interface FAQSectionProps {

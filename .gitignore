@@ -36,3 +36,14 @@ yarn-error.log*
 *.tsbuildinfo
 next-env.d.ts
 .worktrees/
+
+# AI Agent & Local Server Noise
+.mcp.json
+.server.log
+.server.pid
+.server-stopped
+.superpowers/
+*-audit-overview.html
+
+# General Logs
+*.log

@@ -1,7 +1,17 @@
 import { buildConfig } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { resendAdapter } from '@payloadcms/email-resend'
-import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import {
+  BoldFeature,
+  HeadingFeature,
+  ItalicFeature,
+  LinkFeature,
+  OrderedListFeature,
+  UnderlineFeature,
+  UnorderedListFeature,
+  ParagraphFeature,
+  lexicalEditor,
+} from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
@@ -27,7 +37,18 @@ export default buildConfig({
   },
   collections: [Pages, Offers, Testimonials, FAQs, Guides, Media, Users],
   globals: [SiteConfig],
-  editor: lexicalEditor(),
+  editor: lexicalEditor({
+    features: () => [
+      ParagraphFeature(),
+      HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
+      BoldFeature(),
+      ItalicFeature(),
+      UnderlineFeature(),
+      OrderedListFeature(),
+      UnorderedListFeature(),
+      LinkFeature(),
+    ],
+  }),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
     outputFile: path.resolve(dirname, 'payload-types.ts'),
@@ -36,12 +57,17 @@ export default buildConfig({
     push: process.env.NODE_ENV !== 'production',
     pool: {
       connectionString: process.env.DATABASE_URI || '',
+      max: 5,
     },
   }),
-  email: resendAdapter({
-    defaultFromAddress: process.env.EMAIL_FROM || 'noreply@soulinitiation.com',
-    defaultFromName: 'Soul Initiation Academy',
-    apiKey: process.env.RESEND_API_KEY || '',
-  }),
+  ...(process.env.RESEND_API_KEY
+    ? {
+        email: resendAdapter({
+          defaultFromAddress: process.env.EMAIL_FROM || 'noreply@soulinitiation.com',
+          defaultFromName: 'Soul Initiation Academy',
+          apiKey: process.env.RESEND_API_KEY,
+        }),
+      }
+    : {}),
   sharp,
 })
