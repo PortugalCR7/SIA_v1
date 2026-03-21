@@ -11,6 +11,7 @@ import { Testimonials } from '@/collections/Testimonials'
 import { FAQs } from '@/collections/FAQs'
 import { Media } from '@/collections/Media'
 import { Users } from '@/collections/Users'
+import { Guides } from '@/collections/Guides'
 import { SiteConfig } from '@/globals/SiteConfig'
 
 const filename = fileURLToPath(import.meta.url)
@@ -23,7 +24,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Pages, Offers, Testimonials, FAQs, Media, Users],
+  collections: [Pages, Offers, Testimonials, FAQs, Guides, Media, Users],
   globals: [SiteConfig],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
