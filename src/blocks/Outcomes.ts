@@ -6,6 +6,7 @@ export const Outcomes: Block = {
   fields: [
     { name: 'sectionLabel', type: 'text' },
     { name: 'heading', type: 'text', required: true },
+    { name: 'body', type: 'textarea' },
     { name: 'changes', type: 'array', fields: [{ name: 'label', type: 'text', required: true }, { name: 'body', type: 'text' }] },
   ],
 }

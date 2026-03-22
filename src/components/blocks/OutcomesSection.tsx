@@ -10,12 +10,14 @@ interface Change {
 interface OutcomesSectionProps {
   sectionLabel?: string;
   heading: string;
+  body?: string;
   changes?: Change[];
 }
 
 export default function OutcomesSection({
   sectionLabel = "What Tends to Change",
   heading,
+  body,
   changes = [],
 }: OutcomesSectionProps) {
   return (
@@ -26,7 +28,24 @@ export default function OutcomesSection({
           style={{ fontSize: "clamp(3rem, 7vw, 5.5rem)" }} stagger={55} baseDelay={80}>
           {heading}
         </SplitHeading>
-        <div className="grid md:grid-cols-2 gap-x-12 mt-14">
+
+        {/* Intro paragraph — sets the contemplative frame before the grid */}
+        {body && (
+          <p
+            className="reveal delay-2 font-body text-ink/62 mt-8 max-w-3xl"
+            style={{ fontSize: "clamp(0.9375rem, 1.4vw, 1.0625rem)", lineHeight: "1.75" }}
+          >
+            {body}
+          </p>
+        )}
+
+        {/* Hairline divider — visual breath between statement and items */}
+        <div
+          className="reveal delay-2 mt-10 mb-0"
+          style={{ height: "1px", backgroundColor: "rgba(181,168,152,0.35)", maxWidth: "100%" }}
+        />
+
+        <div className="grid md:grid-cols-2 gap-x-12 mt-0">
           {changes.map(({ label, body }, i) => (
             <div
               key={i}
