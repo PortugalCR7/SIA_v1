@@ -11,18 +11,19 @@ export async function GET(req: NextRequest) {
   const payload = await getPayload({ config })
 
   // ─────────────────────────────────────────
-  // 0. Admin User — create if not exists
+  // 0. Admin User — upsert (delete + recreate)
   // ─────────────────────────────────────────
-  const existingUsers = await payload.find({ collection: 'users', limit: 1 })
-  if (existingUsers.totalDocs === 0) {
-    await payload.create({
-      collection: 'users',
-      data: {
-        email: 'david@david.com',
-        password: 'david123',
-      },
-    })
-  }
+  const existingUsers = await payload.find({ collection: 'users', limit: 100 })
+  await Promise.all(
+    existingUsers.docs.map((doc) => payload.delete({ collection: 'users', id: doc.id })),
+  )
+  await payload.create({
+    collection: 'users',
+    data: {
+      email: 'david@david.com',
+      password: 'david123',
+    },
+  })
 
   // ─────────────────────────────────────────
   // 1. Testimonials — wipe all, recreate clean
