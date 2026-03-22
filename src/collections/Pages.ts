@@ -9,6 +9,7 @@ import { Process } from '@/blocks/Process'
 import { WhatThisRequires } from '@/blocks/WhatThisRequires'
 import { WhoItsFor } from '@/blocks/WhoItsFor'
 import { Outcomes } from '@/blocks/Outcomes'
+import { AccompaniedBlock } from '@/blocks/AccompaniedBlock'
 import { GuidesBlock } from '@/blocks/GuidesBlock'
 import { TestimonialsBlock } from '@/blocks/TestimonialsBlock'
 import { Offer } from '@/blocks/Offer'
@@ -25,7 +26,7 @@ export const Pages: CollectionConfig = {
     {
       name: 'blocks',
       type: 'blocks',
-      blocks: [Hero, Marquee, SplitLeft, ThresholdStatement, SplitRight, Process, WhatThisRequires, WhoItsFor, Outcomes, GuidesBlock, TestimonialsBlock, Offer, FAQsBlock, FinalCTA],
+      blocks: [Hero, Marquee, SplitLeft, ThresholdStatement, SplitRight, Process, WhatThisRequires, WhoItsFor, Outcomes, AccompaniedBlock, GuidesBlock, TestimonialsBlock, Offer, FAQsBlock, FinalCTA],
     },
     { name: 'seoTitle', type: 'text' },
     { name: 'seoDescription', type: 'textarea' },

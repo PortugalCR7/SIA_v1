@@ -17,6 +17,7 @@ import ProcessSection from '@/components/blocks/ProcessSection'
 import WhatThisRequiresSection from '@/components/blocks/WhatThisRequiresSection'
 import WhoItsForSection from '@/components/blocks/WhoItsForSection'
 import OutcomesSection from '@/components/blocks/OutcomesSection'
+import AccompaniedSection from '@/components/blocks/AccompaniedSection'
 import GuidesSection from '@/components/blocks/GuidesSection'
 import TestimonialsSection from '@/components/blocks/TestimonialsSection'
 import OfferSection from '@/components/blocks/OfferSection'
@@ -48,6 +49,8 @@ function renderBlock(block: any, siteConfig: any) {
       return <WhoItsForSection key={block.id} {...block} />
     case 'outcomes':
       return <OutcomesSection key={block.id} {...block} />
+    case 'accompanied':
+      return <AccompaniedSection key={block.id} {...block} />
     case 'guides':
       return <GuidesSection key={block.id} {...block} />
     case 'testimonials':
