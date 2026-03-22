@@ -102,15 +102,15 @@ export default function ProcessSection({
           <span className="rule-gold w-10" />{sectionLabel}
         </p>
         <SplitHeading
-          className="font-heading text-ink mb-6 text-balance font-bold"
-          style={{ fontSize: "clamp(3rem, 6vw, 5rem)" }}
+          className="font-heading italic text-ink mb-6 text-balance font-semibold"
+          style={{ fontSize: "clamp(3rem, 6vw, 5rem)", letterSpacing: "-0.02em", lineHeight: 1.05 }}
           stagger={80}
           baseDelay={80}
         >
           {heading}
         </SplitHeading>
         {subheading && (
-          <p className="reveal delay-2 font-heading italic font-normal text-[1.125rem] text-ink/55 max-w-3xl mb-16 leading-relaxed">
+          <p className="reveal delay-2 font-heading italic font-normal text-[1.125rem] text-ink/55 max-w-3xl mb-16 leading-relaxed whitespace-pre-line">
             {subheading}
           </p>
         )}
@@ -135,103 +135,137 @@ export default function ProcessSection({
             <h3 className="font-heading italic text-[2.5rem] leading-[1.1] text-ink mb-5 font-semibold">
               {name}
             </h3>
-            <p className="font-body text-[0.9375rem] text-ink/70 leading-relaxed font-normal">{body}</p>
+            <p className="font-body text-[0.9375rem] text-ink/70 leading-relaxed font-normal whitespace-pre-line">{body}</p>
           </div>
         ))}
       </section>
     );
   }
 
-  /* ── Desktop horizontal scroll ───────────────────────────────────────── */
+  /* ── Desktop layout ──────────────────────────────────────────────────── */
   return (
-    <section ref={sectionRef} className="arc-section bg-cream overflow-hidden relative">
-      <div
-        ref={trackRef}
-        className="arc-track flex items-stretch relative"
-        style={{ width: `${phases.length * 100}vw`, minHeight: "100vh" }}
-      >
-        {/* Gold connector line that draws across all panels */}
-        <div
-          className="absolute top-[55%] left-[6vw] pointer-events-none z-10"
-          style={{ width: "calc(100% - 12vw)", height: "1px" }}
+    <>
+      {/* Section heading — normal scroll flow, above the pinned track */}
+      <div className="bg-cream px-[8vw] pt-32 pb-20">
+        <p className="reveal overline text-ink/40 font-bold mb-12 flex items-center gap-6">
+          <span className="rule-gold w-10" />{sectionLabel}
+        </p>
+        <SplitHeading
+          className="font-heading italic text-ink font-semibold"
+          style={{
+            fontSize: "clamp(3.5rem, 6vw, 5.5rem)",
+            letterSpacing: "-0.025em",
+            lineHeight: 1.05,
+            marginBottom: "2rem",
+          }}
+          stagger={60}
+          baseDelay={100}
         >
-          <div
-            ref={connectorRef}
-            className="w-full h-full origin-left"
-            style={{
-              transform: "scaleX(0)",
-              background: "linear-gradient(90deg, var(--gold) 0%, var(--gold-lt) 50%, var(--gold) 100%)",
-              opacity: 0.45,
-            }}
-          />
-        </div>
-
-        {phases.map(({ numeral, name, body }) => (
-          <div
-            key={numeral}
-            className="arc-panel relative flex flex-col justify-center px-[8vw]"
-            style={{ width: "100vw", minHeight: "100vh" }}
+          {heading}
+        </SplitHeading>
+        {subheading && (
+          <p
+            className="reveal delay-3 font-heading italic font-normal text-ink/55 max-w-3xl leading-relaxed whitespace-pre-line"
+            style={{ fontSize: "clamp(1.125rem, 1.5vw, 1.375rem)" }}
           >
-            {/* Ghost numeral watermark — large, right-bled, barely there */}
-            <span
-              className="phase-ghost-h absolute select-none pointer-events-none"
-              style={{
-                right: "-8vw",
-                top: "50%",
-                transform: "translateY(-50%)",
-                fontFamily: "'Cormorant Garamond', serif",
-                fontSize: "clamp(16rem, 30vw, 32rem)",
-                fontWeight: 300,
-                lineHeight: 0.8,
-                color: "var(--ink)",
-                opacity: 0,
-                letterSpacing: "-0.06em",
-              }}
-            >
-              {numeral}
-            </span>
-
-            {/* Node dot + ring on connector line */}
-            <div className="absolute top-[55%] left-[6vw] -translate-y-1/2 z-20">
-              <span className="relative inline-block">
-                <span
-                  className="arc-node-ring absolute inset-0 rounded-full border border-gold pointer-events-none"
-                  style={{ opacity: 0, transformOrigin: "center" }}
-                />
-                <span
-                  className="arc-node block w-3 h-3 rounded-full border-2 border-ink/20 bg-cream transition-colors duration-500"
-                  style={{ transform: "scale(0.6)" }}
-                />
-              </span>
-            </div>
-
-            {/* Phase content */}
-            <div className="relative z-10 max-w-2xl">
-              {/* Phase overline */}
-              <p className="overline text-ink/30 font-bold mb-5">{`Phase ${numeral}`}</p>
-
-              {/* Gold micro-rule — typographic breath between overline and title */}
-              <span
-                className="block mb-7 h-px bg-gold/55"
-                style={{ width: "2.25rem" }}
-                aria-hidden="true"
-              />
-
-              {/* Phase name — Cormorant italic for soul */}
-              <h3
-                className="font-heading italic text-ink mb-8 font-semibold"
-                style={{ fontSize: "clamp(3rem, 5vw, 5rem)", lineHeight: 1.05, letterSpacing: "-0.02em" }}
-              >
-                {name}
-              </h3>
-
-              <p className="font-body text-[1.0625rem] text-ink/72 leading-relaxed max-w-lg font-normal">
-                {body}
-              </p>
-            </div>
-          </div>
-        ))}
+            {subheading}
+          </p>
+        )}
       </div>
-    </section>
+
+      {/* Pinned horizontal scroll — phases only */}
+      <section ref={sectionRef} className="arc-section bg-cream overflow-hidden relative">
+        <div
+          ref={trackRef}
+          className="arc-track flex items-stretch relative"
+          style={{ width: `${phases.length * 100}vw`, minHeight: "100vh" }}
+        >
+          {/* Gold connector line that draws across all panels */}
+          <div
+            className="absolute top-[55%] left-[6vw] pointer-events-none z-10"
+            style={{ width: "calc(100% - 12vw)", height: "1px" }}
+          >
+            <div
+              ref={connectorRef}
+              className="w-full h-full origin-left"
+              style={{
+                transform: "scaleX(0)",
+                background: "linear-gradient(90deg, var(--gold) 0%, var(--gold-lt) 50%, var(--gold) 100%)",
+                opacity: 0.45,
+              }}
+            />
+          </div>
+
+          {phases.map(({ numeral, name, body }) => (
+            <div
+              key={numeral}
+              className="arc-panel relative flex flex-col justify-center px-[8vw]"
+              style={{ width: "100vw", minHeight: "100vh" }}
+            >
+              {/* Ghost numeral watermark — large, right-bled, barely there */}
+              <span
+                className="phase-ghost-h absolute select-none pointer-events-none"
+                style={{
+                  right: "-8vw",
+                  top: "50%",
+                  transform: "translateY(-50%)",
+                  fontFamily: "'Cormorant Garamond', serif",
+                  fontSize: "clamp(16rem, 30vw, 32rem)",
+                  fontWeight: 300,
+                  lineHeight: 0.8,
+                  color: "var(--ink)",
+                  opacity: 0,
+                  letterSpacing: "-0.06em",
+                }}
+              >
+                {numeral}
+              </span>
+
+              {/* Node dot + ring on connector line */}
+              <div className="absolute top-[55%] left-[6vw] -translate-y-1/2 z-20">
+                <span className="relative inline-block">
+                  <span
+                    className="arc-node-ring absolute inset-0 rounded-full border border-gold pointer-events-none"
+                    style={{ opacity: 0, transformOrigin: "center" }}
+                  />
+                  <span
+                    className="arc-node block w-3 h-3 rounded-full border-2 border-ink/20 bg-cream transition-colors duration-500"
+                    style={{ transform: "scale(0.6)" }}
+                  />
+                </span>
+              </div>
+
+              {/* Phase content */}
+              <div className="relative z-10 max-w-2xl">
+                {/* Phase overline */}
+                <p className="overline text-ink/30 font-bold mb-5">{`Phase ${numeral}`}</p>
+
+                {/* Gold micro-rule — typographic breath between overline and title */}
+                <span
+                  className="block mb-7 h-px bg-gold/55"
+                  style={{ width: "2.25rem" }}
+                  aria-hidden="true"
+                />
+
+                {/* Phase name — Cormorant italic */}
+                <h3
+                  className="font-heading italic text-ink mb-8 font-semibold"
+                  style={{ fontSize: "clamp(3rem, 5vw, 5rem)", lineHeight: 1.05, letterSpacing: "-0.02em" }}
+                >
+                  {name}
+                </h3>
+
+                <p
+                  className="font-body text-ink/72 leading-relaxed max-w-lg font-normal whitespace-pre-line"
+                  style={{ fontSize: "clamp(1rem, 1.2vw, 1.125rem)" }}
+                >
+                  {body}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    </>
   );
 }
