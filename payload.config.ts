@@ -30,7 +30,23 @@ const dirname = path.dirname(filename)
 
 export default buildConfig({
   admin: {
+    theme: 'dark',
     user: Users.slug,
+    components: {
+      Nav: '/src/components/admin/AdminNav#default',
+      graphics: {
+        Logo: '/src/components/admin/AdminLogo#default',
+        Icon: '/src/components/admin/AdminIcon#default',
+      },
+      views: {
+        dashboard: {
+          Component: '/src/components/admin/Dashboard#default',
+        },
+        login: {
+          Component: '/src/components/admin/LoginPage#default',
+        },
+      },
+    },
     importMap: {
       baseDir: path.resolve(dirname),
     },
@@ -54,7 +70,7 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: postgresAdapter({
-    push: false,
+    push: true,
     pool: {
       connectionString: process.env.DATABASE_URI || '',
       max: 3,

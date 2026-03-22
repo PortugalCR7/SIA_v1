@@ -1,0 +1,91 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Jost:wght@300;400;500;600&display=swap');
+
+/* Override Payload's CSS variables via source-order cascade.
+   This file is imported after Payload's own styles in layout.tsx, so declarations here
+   win via cascade order. */
+:root,
+html[data-theme='dark'] {
+  --theme-bg: #000000;
+  --theme-elevation-0: #080808;
+  --theme-elevation-50: #0f0f0f;
+  --theme-elevation-100: #141414;
+  --theme-elevation-150: #1a1a1a;
+  --theme-elevation-200: #1f1f1f;
+  --theme-elevation-500: #2a2a2a;
+  --theme-elevation-1000: #333333;
+  --theme-text: #e0d4bc;
+  --theme-input-bg: #0a0a0a;
+  --theme-success: #b49155;
+  --theme-error-500: #c4433a;
+  --theme-elevation-800: #2e2e2e;
+
+  --font-body: 'Jost', sans-serif;
+  --font-serif: 'Cormorant Garamond', serif;
+
+  /* SIA brand tokens */
+  --sia-gold: #b49155;
+  --sia-gold-dim: rgba(180, 145, 85, 0.45);
+  --sia-gold-faint: rgba(180, 145, 85, 0.12);
+  --sia-gold-hover: rgba(180, 145, 85, 0.85);
+  --sia-muted: rgba(224, 212, 188, 0.35);
+  --sia-text: #e0d4bc;
+  --sia-text-dim: rgba(224, 212, 188, 0.6);
+  --sia-bg: #000000;
+  --sia-card: rgba(20, 20, 20, 0.6);
+  --sia-card-border: rgba(180, 145, 85, 0.15);
+  --sia-card-border-hover: rgba(180, 145, 85, 0.35);
+}
+
+/* Global font override */
+body {
+  font-family: var(--font-body) !important;
+  background: var(--sia-bg) !important;
+  color: var(--sia-text) !important;
+}
+
+/* Hide default Payload nav when custom nav is active */
+.payload__nav,
+header.payload-default {
+  font-family: var(--font-body);
+}
+
+/* Gold focus rings on inputs */
+.field-type input:focus,
+.field-type textarea:focus,
+.field-type select:focus {
+  border-color: var(--sia-gold-dim) !important;
+  box-shadow: 0 0 0 1px var(--sia-gold-dim) !important;
+}
+
+/* Button overrides */
+.btn--style-primary {
+  background: transparent !important;
+  border: 1px solid var(--sia-gold) !important;
+  color: var(--sia-gold) !important;
+  font-family: var(--font-body) !important;
+  letter-spacing: 0.05em !important;
+  transition: all 0.2s ease !important;
+}
+
+.btn--style-primary:hover {
+  background: var(--sia-gold-faint) !important;
+  color: #fff !important;
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--sia-gold-faint);
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--sia-gold-dim);
+}
