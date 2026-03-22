@@ -15,7 +15,9 @@ interface HeroSectionProps {
   sectionLabel?: string;
   headline: string;
   subheadline?: string;
+  tagline?: string;
   statBar?: StatItem[];
+  bottomCaption?: string;
   ctaLabel?: string;
   ctaUrl?: string;
   backgroundImage?: unknown;
@@ -101,11 +103,13 @@ export default function HeroSection({
   sectionLabel = "Soul Initiation Academy",
   headline,
   subheadline,
+  tagline,
   statBar = [
     { label: "Cohort", value: "8" },
     { label: "Duration", value: "6 Months" },
     { label: "Begins", value: "April 2026" },
   ],
+  bottomCaption,
   ctaLabel = "Begin Your Application",
   ctaUrl = "#apply",
 }: HeroSectionProps) {
@@ -213,6 +217,16 @@ export default function HeroSection({
             transition: "opacity 1s cubic-bezier(0.16,1,0.3,1) 0.1s, transform 1s cubic-bezier(0.16,1,0.3,1) 0.1s",
           }}
         >
+          {/* Tagline — body prose bridging headline to CTA */}
+          {tagline && (
+            <p
+              className="font-body text-parchment/65 mb-8 max-w-lg leading-[1.68]"
+              style={{ fontSize: "clamp(0.9375rem, 1.15vw, 1.0625rem)" }}
+            >
+              {tagline}
+            </p>
+          )}
+
           {/* Editorial gold separator before CTA block */}
           <div
             className="mb-8 h-px bg-gold/40"
@@ -237,6 +251,15 @@ export default function HeroSection({
 
           <div ref={statBarRef} className="will-change-transform">
             <HeroStatBar statBar={statBar} />
+            {/* Bottom caption — editorial footnote beneath stats */}
+            {bottomCaption && (
+              <p
+                className="font-heading italic text-parchment/40 mt-3 leading-none"
+                style={{ fontSize: "clamp(0.625rem, 0.75vw, 0.6875rem)", letterSpacing: "0.14em" }}
+              >
+                {bottomCaption}
+              </p>
+            )}
           </div>
         </div>
       </div>
