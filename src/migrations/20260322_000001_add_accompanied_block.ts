@@ -20,7 +20,7 @@ export async function up({ db }: MigrateUpArgs): Promise<void> {
       _parent_id    character varying NOT NULL,
       _path         text              NOT NULL,
       id            character varying PRIMARY KEY,
-      block_type    character varying,
+      block_name    character varying,
       section_label character varying,
       heading       character varying,
       paragraph1    text,

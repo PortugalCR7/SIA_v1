@@ -12,7 +12,9 @@ export const Testimonials: CollectionConfig = {
     {
       name: 'name',
       type: 'text',
-      required: true,
+      admin: {
+        description: 'Optional — leave blank for anonymous testimonials',
+      },
     },
     {
       name: 'role',
