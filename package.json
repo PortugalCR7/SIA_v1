@@ -7,8 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "seed": "tsx src/scripts/seed.ts",
-    "update:recognize": "tsx src/scripts/update-recognize-copy.ts"
+    "seed": "node -r ./src/scripts/preload/fix-next-env.cjs -r tsx/cjs src/scripts/seed.ts",
+    "update:recognize": "node -r ./src/scripts/preload/fix-next-env.cjs -r tsx/cjs src/scripts/update-recognize-copy.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.80.0",
