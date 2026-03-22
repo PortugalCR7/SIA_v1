@@ -16,17 +16,16 @@ import path from 'path'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
-import { Pages } from '@/collections/Pages'
-import { Offers } from '@/collections/Offers'
-import { Testimonials } from '@/collections/Testimonials'
-import { FAQs } from '@/collections/FAQs'
-import { Media } from '@/collections/Media'
-import { Users } from '@/collections/Users'
-import { Guides } from '@/collections/Guides'
-import { SiteConfig } from '@/globals/SiteConfig'
+import { Pages } from './src/collections/Pages.ts'
+import { Offers } from './src/collections/Offers.ts'
+import { Testimonials } from './src/collections/Testimonials.ts'
+import { FAQs } from './src/collections/FAQs.ts'
+import { Media } from './src/collections/Media.ts'
+import { Users } from './src/collections/Users.ts'
+import { Guides } from './src/collections/Guides.ts'
+import { SiteConfig } from './src/globals/SiteConfig.ts'
 
-const filename = fileURLToPath(import.meta.url)
-const dirname = path.dirname(filename)
+const dirname = path.resolve()
 
 export default buildConfig({
   admin: {
@@ -70,7 +69,7 @@ export default buildConfig({
     outputFile: path.resolve(dirname, 'payload-types.ts'),
   },
   db: postgresAdapter({
-    push: false,
+    push: true,
     pool: {
       connectionString: process.env.DATABASE_URI || '',
       max: 3,

@@ -7,6 +7,8 @@ interface FinalCTASectionProps {
   sectionLabel?: string;
   headline: string;
   body?: string;
+  bodySecondary?: string;
+  tagline?: string;
   ctaLabel?: string;
   ctaUrl?: string;
 }
@@ -15,6 +17,8 @@ export default function FinalCTASection({
   sectionLabel = "The Threshold Is Here",
   headline,
   body,
+  bodySecondary,
+  tagline,
   ctaLabel = "Begin Your Application",
   ctaUrl = "#apply-form",
 }: FinalCTASectionProps) {
@@ -105,17 +109,46 @@ export default function FinalCTASection({
           {headline}
         </SplitHeading>
 
-        {/* Body copy — Cormorant italic for the final invitation */}
-        {body && (
-          <div className="reveal delay-1 max-w-2xl mx-auto mb-16 space-y-5">
-            <p className="font-heading italic font-normal text-[1.1875rem] text-parchment/62 leading-[1.7]">
-              {body}
+        {/* Body prose — two-paragraph Cormorant italic invitation */}
+        {(body || bodySecondary) && (
+          <div className="max-w-2xl mx-auto mb-10 flex flex-col gap-6">
+            {body && (
+              <p className="reveal delay-1 font-heading italic font-normal text-[1.1875rem] text-parchment/62 leading-[1.75]">
+                {body}
+              </p>
+            )}
+            {bodySecondary && (
+              <p className="reveal delay-2 font-heading italic font-normal text-[1.125rem] text-parchment/50 leading-[1.75]">
+                {bodySecondary}
+              </p>
+            )}
+          </div>
+        )}
+
+        {/* Tagline stamp — ceremonial badge: mono uppercase tracked, flanked by gold rules */}
+        {tagline && (
+          <div className="reveal delay-3 flex items-center justify-center gap-5 mb-14">
+            <span
+              className="h-px bg-gold/40 flex-shrink-0"
+              style={{ width: "2rem" }}
+              aria-hidden="true"
+            />
+            <p
+              className="font-body text-gold/65 font-bold uppercase"
+              style={{ fontSize: "0.625rem", letterSpacing: "0.28em" }}
+            >
+              {tagline}
             </p>
+            <span
+              className="h-px bg-gold/40 flex-shrink-0"
+              style={{ width: "2rem" }}
+              aria-hidden="true"
+            />
           </div>
         )}
 
         {/* CTA */}
-        <div className="reveal delay-2 flex flex-col items-center gap-12">
+        <div className="reveal delay-4 flex flex-col items-center gap-12">
           <a
             href={ctaUrl}
             className="btn-fill group font-body text-[11px] tracking-[0.35em] uppercase px-14 py-6 bg-parchment text-ink font-bold"
