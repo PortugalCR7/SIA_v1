@@ -2,13 +2,19 @@
 
 import Image from "next/image";
 import { useEffect, useRef, useState } from "react";
-import Nav from "@/components/Nav";
 import ScrollIndicator from "@/components/ScrollIndicator";
 import MarqueeSection from "@/components/blocks/MarqueeSection";
 
 interface StatItem {
   label: string;
   value: string;
+}
+
+interface MediaObject {
+  url: string;
+  alt?: string;
+  width?: number;
+  height?: number;
 }
 
 interface HeroSectionProps {
@@ -20,9 +26,9 @@ interface HeroSectionProps {
   bottomCaption?: string;
   ctaLabel?: string;
   ctaUrl?: string;
-  backgroundImage?: unknown;
-  backgroundVideoMp4?: unknown;
-  backgroundVideoWebm?: unknown;
+  backgroundImage?: MediaObject | null;
+  backgroundVideoMp4?: MediaObject | null;
+  backgroundVideoWebm?: MediaObject | null;
 }
 
 function HeroHeadline({ headline, subheadline }: { headline: string; subheadline?: string }) {
@@ -33,7 +39,8 @@ function HeroHeadline({ headline, subheadline }: { headline: string; subheadline
     return () => clearTimeout(timer);
   }, []);
 
-  const subWords = (subheadline ?? "But Something in You Knows You Haven\u2019t Crossed Yet.").split(" ");
+  const resolvedSubheadline = subheadline ?? "But Something in You Knows You Haven\u2019t Crossed Yet.";
+  const subWords = resolvedSubheadline.split(" ");
 
   return (
     <h1
@@ -90,7 +97,8 @@ function HeroStatBar({ statBar }: { statBar: StatItem[] }) {
           key={label}
           className={`flex flex-col gap-2 px-6 md:px-10 ${i > 0 ? "border-l border-parchment/[0.1]" : ""} ${i === 0 ? "pl-0" : ""}`}
         >
-          <span className="overline text-parchment/35 tracking-[0.45em] text-[0.5rem]">{label}</span>
+          {/* Pro-Max: minimum 10px for overline/caption labels — bumped from 8px */}
+          <span className="overline text-parchment/35 tracking-[0.45em]" style={{ fontSize: "clamp(0.625rem, 0.7vw, 0.6875rem)" }}>{label}</span>
           {/* Cormorant italic numerals for editorial gravitas */}
           <span className="font-heading italic text-parchment text-[1.375rem] md:text-[1.625rem] font-normal leading-none" style={{ letterSpacing: "-0.02em" }}>{value}</span>
         </div>
@@ -112,6 +120,9 @@ export default function HeroSection({
   bottomCaption,
   ctaLabel = "Begin Your Application",
   ctaUrl = "#apply",
+  backgroundImage,
+  backgroundVideoMp4,
+  backgroundVideoWebm,
 }: HeroSectionProps) {
   const [ctaVisible, setCtaVisible] = useState(false);
   const headlineRef = useRef<HTMLDivElement>(null);
@@ -137,13 +148,19 @@ export default function HeroSection({
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
 
+  // Resolve media URLs — CMS values take priority, static assets are fallbacks
+  const bgImageSrc = backgroundImage?.url ?? "/images/hero-mountain.png";
+  const bgImageAlt = backgroundImage?.alt ?? "A lone figure stands above the clouds at the threshold";
+  const videoMp4Src = backgroundVideoMp4?.url ?? "/videos/hero-loop.mp4";
+  const videoWebmSrc = backgroundVideoWebm?.url ?? "/videos/hero-loop.webm";
+
   return (
     <section className="relative min-h-screen flex flex-col">
       {/* Image + video background */}
       <div className="absolute inset-0 img-grain">
         <Image
-          src="/images/hero-mountain.png"
-          alt="A lone figure stands above the clouds at the threshold"
+          src={bgImageSrc}
+          alt={bgImageAlt}
           fill
           className="object-cover object-center img-warm brightness-[0.55]"
           priority
@@ -156,11 +173,11 @@ export default function HeroSection({
           loop
           playsInline
           preload="auto"
-          poster="/images/hero-mountain.png"
+          poster={bgImageSrc}
           aria-hidden="true"
         >
-          <source src="/videos/hero-loop.mp4" type="video/mp4" />
-          <source src="/videos/hero-loop.webm" type="video/webm" />
+          <source src={videoMp4Src} type="video/mp4" />
+          <source src={videoWebmSrc} type="video/webm" />
         </video>
 
         {/* Vertical gradient: heavy dark at top and bottom, atmospheric middle */}
@@ -189,8 +206,6 @@ export default function HeroSection({
       >
         444
       </span>
-
-      <Nav siteTitle="Soul Initiation Academy" />
 
       <div className="relative z-10 flex-1 flex flex-col justify-end px-6 md:px-14 pb-8 md:pb-16 pt-40">
         {/* Section overline */}
@@ -254,8 +269,8 @@ export default function HeroSection({
             {/* Bottom caption — editorial footnote beneath stats */}
             {bottomCaption && (
               <p
-                className="font-heading italic text-parchment/40 mt-3 leading-none"
-                style={{ fontSize: "clamp(0.625rem, 0.75vw, 0.6875rem)", letterSpacing: "0.14em" }}
+                className="font-heading italic text-parchment/40 mt-3 leading-snug"
+                style={{ fontSize: "clamp(0.6875rem, 0.85vw, 0.75rem)", letterSpacing: "0.14em" }}
               >
                 {bottomCaption}
               </p>

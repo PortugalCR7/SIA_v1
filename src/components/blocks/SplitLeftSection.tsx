@@ -4,6 +4,13 @@ import Image from "next/image";
 import { useEffect, useRef } from "react";
 import SplitHeading from "@/components/SplitHeading";
 
+interface CMSImage {
+  url: string;
+  alt: string;
+  width?: number;
+  height?: number;
+}
+
 interface SplitItem {
   num: string;
   label: string;
@@ -15,18 +22,27 @@ interface SplitLeftSectionProps {
   heading: string;
   body?: string;
   items?: SplitItem[];
-  image?: unknown;
+  image?: CMSImage | null;
 }
 
+const FALLBACK_IMAGE = {
+  src: "/images/ritual.png",
+  alt: "A solitary figure in the ancient forest",
+};
+
 export default function SplitLeftSection({
-  sectionLabel = "Do You Recognize This?",
+  sectionLabel,
   heading,
   body,
   items = [],
+  image,
 }: SplitLeftSectionProps) {
   const imgContainerRef = useRef<HTMLDivElement>(null);
   const imgRef = useRef<HTMLDivElement>(null);
   const itemsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  const imgSrc = image?.url ?? FALLBACK_IMAGE.src;
+  const imgAlt = image?.alt || FALLBACK_IMAGE.alt;
 
   // Parallax: image moves at 0.15× container height offset
   useEffect(() => {
@@ -72,19 +88,19 @@ export default function SplitLeftSection({
   }, []);
 
   return (
-    <section className="split">
+    <section className="split" aria-label={sectionLabel ?? "Recognition"}>
       {/* ── Image panel ──────────────────────────────────────────────── */}
       <div ref={imgContainerRef} className="split-img relative min-h-[70vw] md:min-h-0 img-grain overflow-hidden">
         <div ref={imgRef} className="absolute inset-[-15%] will-change-transform">
           <Image
-            src="/images/ritual.png"
-            alt="A solitary figure in the ancient forest"
+            src={imgSrc}
+            alt={imgAlt}
             fill
             className="object-cover object-center img-warm"
             sizes="(max-width: 767px) 100vw, 50vw"
           />
         </div>
-        {/* Lateral gradient edge — creates atmospheric bleed into content panel */}
+        {/* Lateral gradient edge — atmospheric bleed into content panel */}
         <div className="absolute inset-0 bg-gradient-to-r from-transparent via-transparent to-ink/30" />
         {/* Mobile: bottom fade into cream */}
         <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-[#F0EBE3] to-transparent md:hidden z-[3]" />
@@ -92,25 +108,28 @@ export default function SplitLeftSection({
 
       {/* ── Content panel ────────────────────────────────────────────── */}
       <div className="bg-cream flex flex-col justify-center px-8 md:px-16 xl:px-24 section-py">
-        {/* Section overline */}
-        <p className="reveal overline text-ink/40 font-bold mb-10 flex items-center gap-6">
-          <span className="rule-gold w-10" />
-          {sectionLabel}
-        </p>
 
-        {/* Section heading */}
+        {/* Section overline */}
+        {sectionLabel && (
+          <p className="reveal overline text-ink/40 font-bold mb-10 flex items-center gap-6">
+            <span className="rule-gold w-10" />
+            {sectionLabel}
+          </p>
+        )}
+
+        {/* Section heading — max-w-xl keeps line length ≤65 chars on wide panels */}
         <SplitHeading
-          className="font-heading text-ink mb-10 text-balance font-bold"
-          style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)" }}
+          className="font-heading text-ink mb-10 text-balance font-bold max-w-xl"
+          style={{ fontSize: "clamp(2.5rem, 5vw, 4.5rem)", lineHeight: 1.08 }}
           stagger={60}
           baseDelay={80}
         >
           {heading}
         </SplitHeading>
 
-        {/* Intro body — Cormorant italic for the solemn, manifesto register */}
+        {/* Intro body — Cormorant italic for solemn, manifesto register */}
         {body && (
-          <p className="reveal delay-2 font-heading italic font-normal text-[1.2rem] md:text-[1.3125rem] text-ink/70 leading-[1.65] mb-14 max-w-xl">
+          <p className="reveal delay-2 font-heading italic font-normal text-[1.125rem] md:text-[1.25rem] text-ink/70 leading-[1.7] mb-14 max-w-xl">
             {body}
           </p>
         )}
@@ -139,18 +158,19 @@ export default function SplitLeftSection({
                 {num}
               </span>
 
-              {/* Inline numeral — small mono overline treatment */}
-              <span className="font-mono text-[0.6rem] tracking-[0.3em] text-ink/25 leading-none shrink-0 mt-[0.35rem] select-none group-hover:text-ink/50 transition-colors duration-400">
+              {/* Inline numeral — mono overline treatment */}
+              <span className="font-mono text-[0.6rem] tracking-[0.3em] text-ink/25 leading-none shrink-0 mt-[0.35rem] select-none group-hover:text-ink/50 transition-colors duration-400" aria-hidden="true">
                 {num.padStart(2, "0")}
               </span>
 
               <div className="split-left-item-content relative">
                 <span className="split-left-gold-line" />
-                {/* Label in Cormorant italic — ceremonial, poetic */}
-                <p className="font-heading italic text-[1.4375rem] leading-[1.2] text-ink mb-2.5 font-semibold split-left-title">
+                {/* Label — Cormorant italic, ceremonial register */}
+                <p className="font-heading italic text-[1.4375rem] leading-[1.15] text-ink mb-3 font-semibold split-left-title">
                   {label}
                 </p>
-                <p className="font-body text-[0.9375rem] text-ink/55 leading-relaxed font-normal split-left-body">
+                {/* Body — ink/65 ensures WCAG AA 4.5:1 contrast on cream (#F0EBE3) */}
+                <p className="font-body text-[0.9375rem] text-ink/65 leading-[1.65] font-normal split-left-body">
                   {itemBody}
                 </p>
               </div>
