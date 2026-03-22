@@ -26,6 +26,22 @@ function makeLexical(paragraphs: string[]) {
 async function seed() {
   const payload = await getPayload({ config })
 
+  // Create admin user if not already exists
+  console.log('Seeding Admin User...')
+  const existingUsers = await payload.find({ collection: 'users', limit: 1 })
+  if (existingUsers.totalDocs === 0) {
+    await payload.create({
+      collection: 'users',
+      data: {
+        email: 'david@david.com',
+        password: 'david123',
+      },
+    })
+    console.log('  Admin user created: david@david.com')
+  } else {
+    console.log('  Admin user already exists — skipping.')
+  }
+
   console.log('Seeding SiteConfig...')
   await payload.updateGlobal({
     slug: 'site-config',
