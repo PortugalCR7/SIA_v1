@@ -5,6 +5,7 @@
    win via cascade order. */
 :root,
 html[data-theme='dark'] {
+  --nav-width: 220px;
   --theme-bg: #000000;
   --theme-elevation-0: #080808;
   --theme-elevation-50: #0f0f0f;
@@ -34,6 +35,14 @@ html[data-theme='dark'] {
   --sia-card: rgba(20, 20, 20, 0.6);
   --sia-card-border: rgba(180, 145, 85, 0.15);
   --sia-card-border-hover: rgba(180, 145, 85, 0.35);
+}
+
+/* Offset main content area for our custom 220px fixed sidebar */
+.template-default,
+.template-minimal,
+.payload-main,
+main.template-default {
+  padding-left: 220px !important;
 }
 
 /* Global font override */
