@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "seed": "tsx src/scripts/seed.ts"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "^3.80.0",
