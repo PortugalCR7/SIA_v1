@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-require-imports */
 const url = process.env.DATABASE_URI || 'postgresql://postgres.xgaemrvenyqnmzwylgsk:P0rtug%40l%23%5E%25%40lld%40y@aws-0-us-west-2.pooler.supabase.com:6543/postgres?pgbouncer=true';
 const { Client } = require('pg');
 
