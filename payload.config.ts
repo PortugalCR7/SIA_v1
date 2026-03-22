@@ -56,8 +56,13 @@ export default buildConfig({
   db: postgresAdapter({
     push: process.env.NODE_ENV !== 'production',
     pool: {
-      connectionString: process.env.DATABASE_URI || '',
-      max: 5,
+      connectionString: (process.env.DATABASE_URI || '')
+        .replace(':5432/', ':6543/')
+        .replace('?', '?pgbouncer=true&') || '',
+      max: 10,
+      min: 1,
+      idleTimeoutMillis: 10000,
+      connectionTimeoutMillis: 5000,
     },
   }),
   ...(process.env.RESEND_API_KEY
